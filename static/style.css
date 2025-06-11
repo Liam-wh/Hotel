@@ -53,12 +53,47 @@ html, body {
     transform: translateX(-50%);
     z-index: 4;
     border-radius: 25px;
-    padding: 5px 20px;
+    padding: 10px 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     background-color: rgba(255, 255, 255, 0.7);
     /* fondo blanco con 60% de opacidad */
     border: 1px solid rgba(255, 255, 255, 0.8);
     /* borde blanco claro */
+}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #carrusel {
+        height: 300px;
+    }
+
+    #carrusel-img {
+        height: 100%;
+    }
+
+    #carrusel-text {
+        font-size: 0.9rem;
+        width: 90%;
+        left: 50%;
+        bottom: 15%;
+        transform: translate(-50%, 0%);
+        padding: 10px;
+    }
+
+    #navbar-centro {
+        flex-direction: column;
+        padding: 10px;
+        width: 90%;
+        bottom: 10px;
+    }
+
+    .menu {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .nav-link {
+        padding: 5px 0;
+    }
 }
 
 .custom-tooltip {
@@ -72,12 +107,11 @@ html, body {
 
 /* Imagen con borde redondeado */
 #img-welcome {
-
     width: 100%;
     height: 100%;
+    max-height: 400px;
     object-fit: cover;
-    border-radius: 1rem;
-    height: 300px;
+    border-radius: 0.6rem;
 }
 
 /* Oscurecimiento con borde */
@@ -87,71 +121,88 @@ html, body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to left, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+    background: linear-gradient(to left, rgba(0, 0, 0, 0.9), transparent);
     z-index: 1;
     border-radius: 1rem;
     pointer-events: none;
 }
 
-/* Efecto máquina de escribir que se repite */
-.typewriter {
-    font-size: clamp(1rem, 4vw, 4rem);
-    /* Mínimo 1rem, ideal 2.5vw, máximo 3rem */
-
-    overflow: hidden;
-    white-space: nowrap;
-    border-right: 0.15em solid white;
-    animation: typing-erasing 12s steps(30, end) infinite;
-
-}
-
-/* Máquina de escribir: escribir (3s), esperar (3s), borrar (3s), esperar (3s) */
-@keyframes typing-erasing {
-    0% {
-        width: 0
-    }
-
-    25% {
-        width: 100%
-    }
-
-    /* Escribir */
-    50% {
-        width: 100%
-    }
-
-    /* Pausa */
-    75% {
-        width: 0
-    }
-
-    /* Borrado */
-    100% {
-        width: 0
-    }
-
-    /* Pausa */
-}
-
-/* Parpadeo del cursor */
-@keyframes blink-caret {
-
-    from,
-    to {
-        border-color: transparent
-    }
-
-    50% {
-        border-color: white
-    }
-}
-
+/* Contenedor del texto */
 .card-img-overlay {
     position: absolute;
     z-index: 2;
     color: white;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
+    padding: 1rem;
 }
+
+/* Contenedor del texto con max-width para evitar que ocupe todo en móviles */
+.text-container {
+    max-width: 630px;
+    width: 100%;
+}
+
+/* Texto con efecto máquina de escribir */
+.typewriter {
+    font-size: clamp(1.2rem, 4vw, 3rem);
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 0.06em solid white;
+    animation: typing-erasing 8s steps(40, end) infinite;
+}
+
+/* Animación de escribir y borrar */
+@keyframes typing-erasing {
+    0% { width: 0 }
+    25% { width: 100% }
+    50% { width: 100% }
+    75% { width: 0 }
+    100% { width: 0 }
+}
+
+/* Cursor parpadeante (si lo deseas agregar como efecto) */
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: white }
+}
+
+/* Responsive: texto más pequeño y centrado en móviles */
+@media (max-width: 768px) {
+    .card-img-overlay {
+        justify-content: center !important;
+        text-align: center !important;
+        padding-right: 1rem;
+        padding-left: 1rem;
+    }
+
+    .typewriter {
+        font-size: 1.6rem;
+    }
+
+    .card-text, .card-title, .text-container p {
+        font-size: 1.6rem;
+    }
+
+    .img-dark-overlay {
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    }
+}
+
+
+@media (max-width: 768px) {
+    #img-welcome {
+        height: 350px !important; /* asegúrate de forzar esta altura */
+    }
+
+    .text-container {
+        padding: 0 1rem; /* espacio horizontal para que el texto no quede pegado al borde */
+    }
+
+    .text-container p {
+        font-size: clamp(0.85rem, 2.5vw, 1rem);
+    }
+}
+
 
 /* estilo de la estrrella */
 .stars {
