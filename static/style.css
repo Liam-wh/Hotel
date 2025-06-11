@@ -53,17 +53,18 @@ html, body {
     transform: translateX(-50%);
     z-index: 4;
     border-radius: 25px;
-    padding: 10px 20px;
+    padding: 10px 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     background-color: rgba(255, 255, 255, 0.7);
     /* fondo blanco con 60% de opacidad */
-    border: 1px solid rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 1);
     /* borde blanco claro */
 }
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     #carrusel {
-        height: 300px;
+        height: 350px;
     }
 
     #carrusel-img {
@@ -71,10 +72,10 @@ html, body {
     }
 
     #carrusel-text {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         width: 90%;
         left: 50%;
-        bottom: 15%;
+        bottom: 18%;
         transform: translate(-50%, 0%);
         padding: 10px;
     }
