@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+
+{% block title %} HOME | HOTEL {% endblock %}
+
+{% block content %}
+
+
+<div class="container-fluid mb-2">
+    <div class="container mt-4">
+        <div class="card border-0 text-white">
+            <!-- Imagen de fondo -->
+            <img src="{{ url_for('static', filename='images/welcome.jpg') }}" id="img-welcome" alt="...">
+
+            <!-- Capa oscura -->
+            <div class="img-dark-overlay "></div>
+
+            <!-- Contenido -->
+            <div class="card-img-overlay d-flex align-items-center justify-content-end text-end pe-5 mt-4">
+                <div class="text-container">
+                    <h3 class="card-title fw-bold typewriter">
+                        Bienvenido al Hotel Paraíso
+                    </h3>
+                    <p class="card-text mb-1 mt-3">Vive el descanso perfecto en cualquier temporada.</p>
+                    <p class="mb-1 me-4">Naturaleza, comodidad y atención única...</p>
+                    <p class="mb-0 me-5">¡Todo en un solo lugar!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<div class="container-fluid  mb-4 bg-light shadow-ms">
+    <div class="container mt-4">
+        <div class="row gx-5 justify-content-center">
+            <h3 class="text-center fw-bold mt-3">¿Por qué debes elegirnos?</h3>
+
+            <div class="col-md-6 col-sm-6 mb-4 mt-4 d-flex justify-content-center">
+                <div class="card" id="card-mov" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="{{ url_for('static', filename='images/card2.jpg') }}"
+                                class="img-fluid rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title mb-3 fw-bold">Hotel SmartStay</h5>
+                                <p class="card-text text-justify">
+                                    Vive una experiencia única e
+                                    inolvidable en nuestros ambientes.
+                                    Desde el check-in digital hasta el control inteligente de tu
+                                    habitación, todo está diseñado para brindarte la comodidad, eficiencia y
+                                    tecnología que necesitas para tu descanso.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 mb-4 mt-4 d-flex justify-content-center ">
+                <div class="card" id="card-mov" style="max-width: 540px;">
+                    <div class="row g-0 ">
+                        <div class="col-md-4">
+                            <img src="{{ url_for('static', filename='images/card1.jpg') }}"
+                                class="img-fluid rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title mb-3 fw-bold">Siempre a tu disposición</h5>
+                                <p class="card-text text-justify">
+                                    Nuestro equipo está siempre disponible para brindarte una atención
+                                    rápida y eficiente.
+                                    Ya sea para ayudarte con una solicitud especial o simplemente asegurarte una
+                                    estancia cómoda,
+                                    nos ocupamos de cada detalle con dedicación y amabilidad.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid  mb-4 bg-light shadow-ms">
+    <div class="container mt-4 pt-3">
+        <h3 class="text-center fw-bold ">Visitanos en destintas temporadas del año </h3>
+        <div class="row gx-4 justify-content-center">
+            <div class="col-md-4 col-sm-6 mb-4 mt-4 d-flex justify-content-center">
+                <div class="card" id="card-mov" style="width: 18rem;">
+                    <img src="{{ url_for('static', filename='images/invierno.jpg') }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Invierno</h5>
+                        <p class="card-text">Disfruta de paisajes nevados y actividades para toda la familia durante
+                            la epoca más fría del año.</p>
+                        <a href="#" class="btn btn-primary">Más información</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 mb-4 mt-4 d-flex justify-content-center">
+                <div class="card" id="card-mov" style="width: 18rem;">
+                    <img src="{{ url_for('static', filename='images/primavera.jpg') }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Primavera</h5>
+                        <p class="card-text">Admira la belleza de flores y colores vibrantes, perfecto para paseos
+                            al aire libre y eventos culturales.</p>
+                        <a href="#" class="btn btn-primary">Más información</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 mb-4 mt-4 d-flex justify-content-center">
+                <div class="card" id="card-mov" style="width: 18rem;">
+                    <img src="{{ url_for('static', filename='images/verano.jpg') }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Verano</h5>
+                        <p class="card-text">Vive días soleados con actividades acuáticas y festivales llenos de
+                            diversión para todas las edades.</p>
+                        <a href="#" class="btn btn-primary">Más información</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5">
+  <h3 class="text-center mb-4 fw-bold">Lo que dicen nuestros huéspedes</h3>
+  <div class="row justify-content-center">
+    <div class="col-md-4 d-flex justify-content-center">
+      <div class="testimonial text-center">
+        <img src="/static/images/persona1.png" alt="Ana M.">
+        <p>"Una experiencia inolvidable. ¡Volveremos sin duda!"<br><strong>- Ana M.</strong></p>
+      </div>
+    </div>
+    <div class="col-md-4 d-flex justify-content-center">
+      <div class="testimonial text-center">
+        <img src="/static/images/persona2.jpg" alt="Carlos G.">
+        <p>"Excelentes instalaciones y personal muy amable."<br><strong>- Carlos G.</strong></p>
+      </div>
+    </div>
+    <div class="col-md-4 d-flex justify-content-center">
+      <div class="testimonial text-center">
+        <img src="/static/images/persona3.jpg" alt="Lucía R.">
+        <p>"Me encantó el desayuno y las vistas espectaculares."<br><strong>- Lucía R.</strong></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

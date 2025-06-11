@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% block title %} NOTICIAS | HOTEL {% endblock %}
+
+{% block content %}
+
+<style>
+    #card-mov::before {
+        content: "NEW";
+        position: absolute;
+        top: 10px;
+        left: -5px;
+        background: #ff4081;
+        color: white;
+        font-weight: bold;
+        padding: 5px 10px;
+        font-size: 0.75rem;
+        border-radius: 0 5px 5px 0;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+</style>
+
+
+<div class="container py-5">
+    <div class="row g-4">
+        <!-- Tarjeta destacada -->
+        <div class="col-12 col-lg-6">
+            <div class="card " id="card-mov">
+                <img src="static/images/vip.jpg" class="card-img-top" alt="Concierto en vivo">
+                <div class="card-body">
+                    <h4 class="card-title">Concierto especial con orquesta invitada</h4>
+                    <p class="card-text">
+                        Este sábado 15 a las 20:00 h, disfruta de una velada inolvidable con la presentación de la
+                        Orquesta Sinfónica UNI. Un espectáculo en vivo en nuestra terraza principal con repertorio
+                        clásico y contemporáneo. ¡Entrada gratuita para nuestros huéspedes!
+                    </p>
+                    <a href="#" class="btn btn-primary">Ver detalles</a>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Acordeón de noticias -->
+        <div class="col-12 col-lg-6">
+            <div class="accordion" id="accordionNoticias">
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#noticia1" aria-expanded="true" aria-controls="noticia1">
+                            Nuevo menú en el restaurante
+                        </button>
+                    </h2>
+                    <div id="noticia1" class="accordion-collapse collapse show" aria-labelledby="headingOne">
+                        <div class="accordion-body">
+                            Nuestro chef ejecutivo ha renovado completamente el menú, incorporando platillos gourmet con
+                            productos locales y opciones veganas, sin gluten y sin lactosa. Disfruta de nuevas
+                            experiencias culinarias en un ambiente elegante y acogedor.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#noticia2" aria-expanded="false" aria-controls="noticia2">
+                            Nuevas actividades en la piscina
+                        </button>
+                    </h2>
+                    <div id="noticia2" class="accordion-collapse collapse" aria-labelledby="headingTwo">
+                        <div class="accordion-body">
+                            Este verano, te traemos actividades en la piscina como clases de aqua-zumba, cine nocturno
+                            flotante y sesiones de relajación al atardecer. Ideales para todas las edades, cada
+                            actividad está guiada por profesionales certificados.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#noticia3" aria-expanded="false" aria-controls="noticia3">
+                            Renovación de habitaciones
+                        </button>
+                    </h2>
+                    <div id="noticia3" class="accordion-collapse collapse" aria-labelledby="headingThree">
+                        <div class="accordion-body">
+                            Hemos renovado todas nuestras habitaciones con nuevas camas ergonómicas, Smart TV,
+                            iluminación ambiental y decoración minimalista para maximizar tu confort. Además, incluimos
+                            estaciones de carga USB y escritorio para viajeros de negocios.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Tarjetas breves -->
+        <div class="col-12 col-md-4 mt-5">
+            <div class="card h-100 shadow-lg border-0">
+                <img src="static/images/noticia1.jpg" class="card-img-top" alt="Mini noticia 1">
+                <div class="card-body">
+                    <h5 class="card-title"> Eventos privados</h5>
+                    <p class="card-text">
+                        Nuestro centro de eventos ofrece salones versátiles para bodas, cumpleaños y reuniones
+                        corporativas. Contamos con equipos audiovisuales, banquetería personalizada y asistencia durante
+                        todo el evento.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-4 mt-5">
+            <div class="card h-100 shadow-sm border-0">
+                <img src="static/images/noticia2.jpg" class="card-img-top" alt="Mini noticia 2">
+                <div class="card-body">
+                    <h5 class="card-title">Música en vivo</h5>
+                    <p class="card-text">
+                        Todos los viernes y sábados, ven a disfrutar de música en vivo en nuestro bar con artistas
+                        locales de jazz, bossa nova y acústico. Ideal para cerrar la noche con una copa y buena
+                        compañía.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-4 mt-5">
+            <div class="card h-100 shadow-lg border-0">
+                <img src="static/images/noticia3.png" class="card-img-top" alt="Mini noticia 3">
+                <div class="card-body">
+                    <h5 class="card-title">Tours personalizados</h5>
+                    <p class="card-text">
+                        Ofrecemos paquetes turísticos guiados por la ciudad, visitas culturales, rutas de senderismo y
+                        tours gastronómicos. Perfecto para explorar durante tu estadía con la comodidad de regresar al
+                        hotel.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

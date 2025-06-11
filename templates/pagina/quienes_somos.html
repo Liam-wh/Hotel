@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block title %} QUIENES SOMOS | HOTEL {% endblock %}
+
+{% block content %}
+
+<div class="container my-5">
+    <div class="row gy-4 gx-5 ">
+        <!-- Contenedor principal que se divide en dos columnas en pantallas grandes -->
+        <div class="col-12 col-lg-9 d-flex flex-column gap-4">
+            <!-- Tarjeta Historia -->
+            <div class="card shadow-lg border-0" >
+                <div class="row g-0 flex-column flex-md-row">
+                    <div class="col-md-6">
+                        <img src="{{ url_for('static', filename='images/historia.jpg') }}" alt="Historia"
+                            class="img-fluid rounded-start w-100 h-100 object-fit-cover" style="min-height: 250px;">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-body p-4">
+                            <h3 class="card-title text-center mb-3">Nuestra Historia</h3>
+                            <p class="card-text text-justify">
+                                Desde 1990, Hotel Paraíso ha ofrecido comodidad y atención personalizada en el corazón
+                                de la ciudad. A lo largo de los años, nos hemos consolidado como una opción confiable
+                                para turistas y viajeros de negocios.
+                            </p>
+                            <p class="card-text text-justify">
+                                Hemos sido parte de momentos inolvidables como lunas de miel y reuniones familiares.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta Nuestro Equipo -->
+            <div class="card shadow-lg border-0" >
+                <div class="row g-0 flex-column-reverse flex-md-row">
+                    <div class="col-md-6">
+                        <div class="card-body p-4">
+                            <h3 class="card-title text-center mb-3">Nuestro Equipo</h3>
+                            <p class="card-text text-justify">
+                                Contamos con un equipo profesional, amable y capacitado para atender a nuestros
+                                huéspedes con eficiencia y cortesía.
+                            </p>
+                            <p class="card-text text-justify">
+                                Capacitación constante para mantener altos estándares de calidad.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="{{ url_for('static', filename='images/personal.jpg') }}" alt="Equipo"
+                            class="img-fluid rounded-end w-100 h-100 object-fit-cover" style="min-height: 250px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna derecha -->
+        <div class="col-12 col-lg-3 d-flex flex-column gap-4">
+            <!-- Tarjeta Misión -->
+            <div class="card border-0 shadow-sm h-100 w-100 " id="card-mov"
+                style="background-color: rgba(173, 216, 230, 0.2);">
+                <img src="{{ url_for('static', filename='images/mision.jpg') }}" alt="Misión"
+                    class="img-fluid rounded-top" style="height: 100px; object-fit: cover;">
+                <div class="card-body p-3 text-center">
+                    <h5 class="mb-2">Misión</h5>
+                    <p class="mb-0">
+                        Brindar una estadía placentera con atención personalizada en un entorno paradisíaco.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Tarjeta Visión -->
+            <div class="card border-0 shadow-sm h-100 w-100" id="card-mov"
+                style="background-color: rgba(255, 215, 0, 0.2);">
+                <img src="{{ url_for('static', filename='images/vision.png') }}" alt="Visión"
+                    class="img-fluid rounded-top" style="height: 100px; object-fit: cover;">
+                <div class="card-body p-3 text-center">
+                    <h5 class="mb-2">Visión</h5>
+                    <p class="mb-0">
+                        Ser el hotel preferido por los viajeros, destacando por calidad, innovación y servicio.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
