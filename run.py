@@ -2,12 +2,19 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 
 app = Flask(__name__)
 
+@app.context_processor
+def inject_active_path():
+    def is_active(path):
+        return 'active' if request.path == path else ''
+    return (dict(is_active = is_active)) 
+
 @app.route('/')
 def index():
-    return render_template('base.html')
+   return redirect(url_for('inicio'))
+    # Redirect to the 'bienvenido' route
 
-@app.route('/bienvenido')
-def bienvenido():
+@app.route('/inicio')
+def inicio():
     return render_template('pagina/index.html')
 
 @app.route('/quienes_somos')

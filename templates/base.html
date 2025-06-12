@@ -9,10 +9,10 @@
         integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 
 </head>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+
 
 <body>
     <div id="main-content">
@@ -141,12 +141,13 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse justify-content-center" id="navbarContenido">
-                        <div class="navbar-nav menu">
-                            <a class="nav-link active" href="{{ url_for('bienvenido') }}">Inicio</a>
-                            <a class="nav-link" href="{{ url_for('quienes_somos') }}">Quiénes Somos</a>
-                            <a class="nav-link" href="{{ url_for('servicios') }}">Servicios</a>
-                            <a class="nav-link" href="{{ url_for('noticias') }}">Noticias</a>
-                            <a class="nav-link" href="{{ url_for('contacto') }}">Contacto</a>
+                        <div class="navbar-nav menu fw-bold">
+                            <a class="nav-link {{is_active('/inicio') }} " href="/inicio">Inicio</a>
+                            <a class="nav-link {{is_active('/quienes_somos') }} " href="/quienes_somos">Quiénes
+                                Somos</a>
+                            <a class="nav-link {{is_active('/servicios') }} " href="/servicios">Servicios</a>
+                            <a class="nav-link {{is_active('/noticias') }} " href="/noticias">Noticias</a>
+                            <a class="nav-link {{is_active('/contacto') }} " href="/contacto">Contacto</a>
                         </div>
                     </div>
                 </div>
@@ -171,19 +172,22 @@
                 </div>
 
                 <div class="d-flex justify-content-center mt-3 gap-4">
-                    <a href="#" class="text-reset social-icon">
+                    <a href="https://www.facebook.com/share/1BW1K6fpGm/" class="text-reset social-icon" target="_blank"
+                        rel="noopener noreferrer">
                         <i class="bi bi-facebook"></i>
                     </a>
-                    <a href="#" class="text-reset social-icon">
+                    <a href="https://twitter.com/paraiso" class="text-reset social-icon" target="_blank" rel="noopener noreferrer">
                         <i class="bi bi-twitter-x"></i>
                     </a>
-                    <a href="#" class="text-reset social-icon">
+                    <a href="https://www.instagram.com/hotel_paraisos/profilecard/?igsh=MWU3Z3Ntem41dWQ3cg%3D%3D"
+                        class="text-reset social-icon" target="_blank" rel="noopener noreferrer">
                         <i class="bi bi-instagram"></i>
                     </a>
-                    <a href="#" class="text-reset social-icon">
+                    <a href="https://wa.me/message/2FQ445TWW7SDF1" class="text-reset social-icon" target="_blank"
+                        rel="noopener noreferrer">
                         <i class="bi bi-whatsapp"></i>
                     </a>
-                    <a href="#" class="text-reset social-icon">
+                    <a href="https://mail.google.com/" class="text-reset social-icon" target="_blank" rel="noopener noreferrer">
                         <i class="bi bi-envelope"></i>
                     </a>
                 </div>
@@ -210,7 +214,7 @@
                         <div class="col-md-4 col-lg-4 col-xl-4 mb-md-0 mb-4">
                             <h6 class="text-uppercase fw-bold mb-4">Contacto</h6>
                             <p><i class="bi bi-geo-alt me-2"></i> Av. Las Americas #105, La Paz, BO</p>
-                            <p><i class="bi bi-envelope me-2"></i> paraiso@hotelparaiso.com</p>
+                            <p><i class="bi bi-envelope me-2"></i> paraiso@email.com</p>
                             <p><i class="bi bi-telephone me-2"></i> +591 631 769 43</p>
                             <p><i class="bi bi-printer me-2"></i> +591 222 379 55</p>
                         </div>
@@ -228,15 +232,7 @@
         integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
         crossorigin="anonymous"></script>
 
-    <script>
-        const tooltipTriggerList = document.querySelectorAll(
-            '[data-bs-toggle="tooltip"]'
-        );
-        const tooltipList = [...tooltipTriggerList].map(
-            (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
-        );
-    </script>
-
+    <script src="static/main.js"></script>
 
 </body>
 

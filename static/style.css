@@ -141,11 +141,12 @@ html, body {
 .text-container {
     max-width: 630px;
     width: 100%;
+    padding: 0 1rem;
 }
 
 /* Texto con efecto máquina de escribir */
 .typewriter {
-    font-size: clamp(1.2rem, 4vw, 3rem);
+    font-size: clamp(1.2rem, 3.4vw, 3.4rem);
     overflow: hidden;
     white-space: nowrap;
     border-right: 0.06em solid white;
@@ -177,11 +178,11 @@ html, body {
     }
 
     .typewriter {
-        font-size: 1.6rem;
+        font-size: 1.4rem;
     }
 
     .card-text, .card-title, .text-container p {
-        font-size: 1.6rem;
+        font-size: 1.4rem;
     }
 
     .img-dark-overlay {
@@ -193,10 +194,6 @@ html, body {
 @media (max-width: 768px) {
     #img-welcome {
         height: 350px !important; /* asegúrate de forzar esta altura */
-    }
-
-    .text-container {
-        padding: 0 1rem; /* espacio horizontal para que el texto no quede pegado al borde */
     }
 
     .text-container p {
@@ -214,24 +211,39 @@ html, body {
     font-size: 1.9rem;
 }
 
+#card-sombra {
+    border: 0;
+    box-shadow: 0 0 1rem rgba(150, 150, 150, 0.2);
+    transition: box-shadow 0.3s ease; /* La transición debe ir aquí para aplicarse tanto en estado normal como en hover */
+}
+
+#card-sombra:hover {
+    box-shadow: 0 1rem 1.8rem rgba(150, 150, 150, 0.4); /* sombra plomo grande */
+}
+
+
 
 /* Estilos para el tarjeta de la home */
 .card img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
 
+#card-mov{
+    box-shadow: 0 0 1rem rgba(150, 150, 150, 0.2);
+    border: 0;
 }
 
 #card-mov:hover {
     transform: scale(1.03);
-    box-shadow: 0 0 15px rgba(135, 206, 250, 0.4);
+    box-shadow: 0 0 20px rgba(150, 150, 150, 0.4);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 
-/* media social*/
 
+/* media social*/
 .social-icon i {
     font-size: 1.5rem;
     transition: transform 0.3s ease, color 0.3s ease;
@@ -274,3 +286,6 @@ html, body {
     max-width: 400px;
 }
 
+#texto_p {
+    font-size: clamp(0.85rem, 2.5vw, 1.1rem);
+}

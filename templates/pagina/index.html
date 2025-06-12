@@ -15,7 +15,7 @@
             <div class="img-dark-overlay "></div>
 
             <!-- Contenido -->
-            <div class="card-img-overlay d-flex align-items-center justify-content-end text-end pe-5 mt-4">
+            <div class="card-img-overlay d-flex align-items-center justify-content-end text-end  mt-4">
                 <div class="text-container">
                     <h3 class="card-title fw-bold typewriter">Bienvenido al Hotel Paraíso</h3>
                     <p class="mb-1">Vive el descanso perfecto en cualquier temporada.</p>
@@ -27,59 +27,61 @@
     </div>
 </div>
 
-
-<div class="container-fluid  mb-4 bg-light shadow-ms">
-    <div class="container mt-4">
-        <div class="row gx-5 justify-content-center">
-            <h3 class="text-center fw-bold mt-3">¿Por qué debes elegirnos?</h3>
-
-            <div class="col-md-6 col-sm-6 mb-4 mt-4 d-flex justify-content-center">
-                <div class="card" id="card-mov" style="max-width: 540px;">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="{{ url_for('static', filename='images/card2.jpg') }}"
-                                class="img-fluid rounded-start" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title mb-3 ">Hotel SmartStay</h5>
-                                <p class=" text-justify">
-                                    Vive una experiencia única e
-                                    inolvidable en nuestros ambientes.
-                                    Desde el check-in digital hasta el control inteligente de tu
-                                    habitación, todo está diseñado para brindarte la comodidad, eficiencia y
-                                    tecnología que necesitas para tu descanso.
-                                </p>
-                            </div>
-                        </div>
+<div class="container mt-5 mb-5">
+    <div class="row g-4">
+        <!-- Tarjeta 1 -->
+        <div class="col-12 col-lg-6">
+            <div class="card border-0 h-100" id="card-sombra">
+                <div class="row g-0 flex-column flex-md-row">
+                    <!-- Imagen -->
+                    <div class="col-12 col-md-4 order-1 order-md-1">
+                        <img src="{{ url_for('static', filename='images/card_equipo.png') }}" alt="Equipo"
+                            class="img-fluid rounded-start w-100 h-100 object-fit-cover" style="min-height: 250px;">
                     </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6 mb-4 mt-4 d-flex justify-content-center ">
-                <div class="card" id="card-mov" style="max-width: 540px;">
-                    <div class="row g-0 ">
-                        <div class="col-md-4">
-                            <img src="{{ url_for('static', filename='images/card1.jpg') }}"
-                                class="img-fluid rounded-start" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title mb-3 ">Siempre a tu disposición</h5>
-                                <p class="text-justify">
-                                    Nuestro equipo está siempre disponible para brindarte una atención
-                                    rápida y eficiente.
-                                    Ya sea para ayudarte con una solicitud especial o simplemente asegurarte una
-                                    estancia cómoda,
-                                    nos ocupamos de cada detalle con dedicación y amabilidad.
-                                </p>
-                            </div>
+                    <!-- Texto -->
+                    <div class="col-12 col-md-8 order-2 order-md-2">
+                        <div class="card-body p-4 h-100 d-flex flex-column justify-content-center">
+                            <h3 class="card-title text-center mb-3">Servicio de calidad</h3>
+                            <p class="text-justify mb-0">
+                                Nuestro equipo está siempre disponible para brindarte una atención rápida y eficiente.
+                                Ya sea para ayudarte con una solicitud especial o simplemente asegurarte una estancia
+                                cómoda,
+                                nos ocupamos de cada detalle con dedicación y amabilidad.
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Tarjeta 2 -->
+        <div class="col-12 col-lg-6">
+            <div class="card  border-0 h-100" id="card-sombra">
+                <div class="row g-0 flex-column flex-md-row">
+                    <!-- Imagen -->
+                    <div class="col-12 col-md-4 order-1 order-md-1 ">
+                        <img src="{{ url_for('static', filename='images/card_smart.jpg') }}" alt="SmartStay"
+                            class="img-fluid rounded-start w-100 h-100 object-fit-cover" style="min-height: 250px;">
+                    </div>
+                    <!-- Texto -->
+                    <div class="col-12 col-md-8 order-2 order-md-2">
+                        <div class="card-body p-4 h-100 d-flex flex-column justify-content-center">
+                            <h3 class="card-title text-center mb-3">Hotel SmartStay</h3>
+                            <p class="text-justify mb-0">
+                                Vive una experiencia única e inolvidable en nuestros ambientes.
+                                Desde el check-in digital hasta el control inteligente de tu habitación,
+                                todo está diseñado para brindarte la comodidad, eficiencia y tecnología
+                                que necesitas para tu descanso.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
+
 
 <div class="container-fluid  mb-4 bg-light shadow-ms">
     <div class="container mt-4 pt-3">
@@ -92,7 +94,11 @@
                         <h5 class="card-title">Invierno</h5>
                         <p class=" ">Disfruta de paisajes nevados y actividades para toda la familia durante
                             la epoca más fría del año.</p>
-                        <a href="#" class="btn btn-primary">Más información</a>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#modal_invierno">
+                            Mas información
+                        </button>
                     </div>
                 </div>
             </div>
@@ -103,7 +109,11 @@
                         <h5 class="card-title ">Primavera</h5>
                         <p class=" ">Admira la belleza de flores y colores vibrantes, perfecto para paseos
                             al aire libre y eventos culturales.</p>
-                        <a href="#" class="btn btn-primary">Más información</a>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#modal_primavera">
+                            Mas información
+                        </button>
                     </div>
                 </div>
             </div>
@@ -114,7 +124,11 @@
                         <h5 class="card-title">Verano</h5>
                         <p class=" ">Vive días soleados con actividades acuáticas y festivales llenos de
                             diversión para todas las edades.</p>
-                        <a href="#" class="btn btn-primary">Más información</a>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#modal_verano">
+                            Mas información
+                        </button>
                     </div>
                 </div>
             </div>
@@ -141,6 +155,230 @@
             <div class="testimonial text-center">
                 <img src="/static/images/persona3.jpg" alt="Lucía R.">
                 <p>"Me encantó el desayuno y las vistas espectaculares."<br><strong>- Lucía R.</strong></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal card -->
+<div class="modal fade" id="modal_invierno" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="modalCardLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header py-2">
+                <h1 class="modal-title fs-5" id="modalCardLabel">Imágenes del hotel en Invierno</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <div class="modal-body p-0">
+                <!-- Carousel -->
+                <div id="carousel_inv" class="carousel slide" data-bs-ride="carousel">
+                    <!-- Indicadores -->
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carousel_inv" data-bs-slide-to="0" class="active"
+                            aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carousel_inv" data-bs-slide-to="1"
+                            aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carousel_inv" data-bs-slide-to="2"
+                            aria-label="Slide 3"></button>
+                    </div>
+
+                    <!-- Slides -->
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="{{ url_for('static', filename='images/invierno_uno.jpg') }}"
+                                class="d-block w-100 img-fluid object-fit-cover"
+                                style="object-fit: cover; height: auto; max-height: 450px;" alt="Invierno 1">
+                            <div class="carousel-caption bg-dark bg-opacity-50 rounded p-2">
+                                <h5 class="fs-5">Vistas de invierno</h5>
+                                <p id="texto_p">Una vista mágica durante la temporada de nieve.</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{{ url_for('static', filename='images/invierno_dos.jpg') }}"
+                                class="d-block w-100 img-fluid object-fit-cover"
+                                style="object-fit: cover; height: auto; max-height: 450px;" alt="Invierno 2">
+                            <div class="carousel-caption bg-dark bg-opacity-50 rounded p-2">
+                                <h5 class="fs-5">Ambientes cálidos</h5>
+                                <p id="texto_p">Relájate junto a la chimenea mientras nieva afuera.</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{{ url_for('static', filename='images/invierno_tres.jpg') }}"
+                                class="d-block w-100 img-fluid object-fit-cover"
+                                style="object-fit: cover; height: auto; max-height: 450px;" alt="Invierno 3">
+                            <div class="carousel-caption bg-dark bg-opacity-50 rounded p-2">
+                                <h5 class="fs-5">Detalles únicos</h5>
+                                <p id="texto_p">Cada rincón decorado para el invierno.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Controles -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel_inv"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carousel_inv"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Siguiente</span>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center py-2">
+                <small class="text-muted">© 2025 Hotel Paraíso. Todos los derechos reservados.</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal card -->
+<div class="modal fade" id="modal_primavera" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="modalCardLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header py-2">
+                <h1 class="modal-title fs-5" id="modalCardLabel">Imágenes del hotel en Primavera</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <div class="modal-body p-0">
+                <!-- Carousel -->
+                <div id="carousel_prim" class="carousel slide" data-bs-ride="carousel">
+                    <!-- Indicadores -->
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carousel_prim" data-bs-slide-to="0" class="active"
+                            aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carousel_prim" data-bs-slide-to="1"
+                            aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carousel_prim" data-bs-slide-to="2"
+                            aria-label="Slide 3"></button>
+                    </div>
+
+                    <!-- Slides -->
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="{{ url_for('static', filename='images/primavera_uno.jpg') }}"
+                                class="d-block w-100 img-fluid object-fit-cover"
+                                style="object-fit: cover; height: auto; max-height: 450px;" alt="primavera 1">
+                            <div class="carousel-caption bg-dark bg-opacity-50 rounded p-2">
+                                <h5 class="fs-5">Jardines florecidos</h5>
+                                <p id="texto_p">Colores vibrantes y flores en cada rincón.</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{{ url_for('static', filename='images/primavera_dos.jpg') }}"
+                                class="d-block w-100 img-fluid object-fit-cover"
+                                style="object-fit: cover; height: auto; max-height: 450px;" alt="primavera 2">
+                            <div class="carousel-caption bg-dark bg-opacity-50 rounded p-2">
+                                <h5 class="fs-5">Amaneceres frescos</h5>
+                                <p id="texto_p">Disfruta del clima suave en la terraza.</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{{ url_for('static', filename='images/primavera_tres.jpg') }}"
+                                class="d-block w-100 img-fluid object-fit-cover"
+                                style="object-fit: cover; height: auto; max-height: 450px;" alt="primavera 3">
+                            <div class="carousel-caption bg-dark bg-opacity-50 rounded p-2">
+                                <h5 class="fs-5">Escenarios naturales</h5>
+                                <p id="texto_p">La naturaleza cobra vida en primavera.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Controles -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel_prim"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carousel_prim"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Siguiente</span>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center py-2">
+                <small class="text-muted">© 2025 Hotel Paraíso. Todos los derechos reservados.</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal card -->
+<div class="modal fade" id="modal_verano" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="modalCardLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header py-2">
+                <h1 class="modal-title fs-5" id="modalCardLabel">Imágenes del hotel en Verano</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <div class="modal-body p-0">
+                <!-- Carousel -->
+                <div id="carousel_vera" class="carousel slide" data-bs-ride="carousel">
+                    <!-- Indicadores -->
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carousel_vera" data-bs-slide-to="0" class="active"
+                            aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carousel_vera" data-bs-slide-to="1"
+                            aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carousel_vera" data-bs-slide-to="2"
+                            aria-label="Slide 3"></button>
+                    </div>
+
+                    <!-- Slides -->
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="{{ url_for('static', filename='images/verano_uno.jpg') }}"
+                                class="d-block w-100 img-fluid object-fit-cover"
+                                style="object-fit: cover; height: auto; max-height: 450px;" alt="verano 1">
+                            <div class="carousel-caption bg-dark bg-opacity-50 rounded p-2">
+                                <h5 class="fs-5">Días soleados</h5>
+                                <p id="texto_p">Disfruta del sol junto a la piscina del hotel.</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{{ url_for('static', filename='images/verano_dos.jpg') }}"
+                                class="d-block w-100 img-fluid object-fit-cover"
+                                style="object-fit: cover; height: auto; max-height: 450px;" alt="verano 2">
+                            <div class="carousel-caption bg-dark bg-opacity-50 rounded p-2">
+                                <h5 class="fs-5">Actividades al aire libre</h5>
+                                <p id="texto_p">Explora senderos, montañas y naturaleza bajo el sol.</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{{ url_for('static', filename='images/verano_tres.jpg') }}"
+                                class="d-block w-100 img-fluid object-fit-cover"
+                                style="object-fit: cover; height: auto; max-height: 450px;" alt="verano 3">
+                            <div class="carousel-caption bg-dark bg-opacity-50 rounded p-2">
+                                <h5 class="fs-5">Atardeceres brillantes</h5>
+                                <p id="texto_p">Relájate con una vista espectacular al final del día.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Controles -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel_vera"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carousel_vera"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Siguiente</span>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center py-2">
+                <small class="text-muted">© 2025 Hotel Paraíso. Todos los derechos reservados.</small>
             </div>
         </div>
     </div>

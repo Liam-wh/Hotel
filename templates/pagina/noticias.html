@@ -34,7 +34,7 @@
                         Orquesta Sinfónica UNI. Un espectáculo en vivo en nuestra terraza principal con repertorio
                         clásico y contemporáneo. ¡Entrada gratuita para nuestros huéspedes!
                     </p>
-                    <a href="#" class="btn btn-primary">Ver detalles</a>
+                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalConcierto">Ver detalles</a>
                 </div>
             </div>
         </div>
@@ -138,6 +138,67 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- Modal Concierto -->
+<div class="modal fade" id="modalConcierto" tabindex="-1" aria-labelledby="modalConciertoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <!-- Header -->
+      <div class="modal-header py-2">
+        <h5 class="modal-title d-flex align-items-center gap-2" id="modalConciertoLabel">
+          <i class="bi bi-music-note-beamed text-primary"></i> Concierto en Vivo
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body">
+        <div class="row g-4 align-items-center">
+          <!-- Imagen principal -->
+          <div class="col-12 col-md-6">
+            <img src="static/images/noticiaVIP.jpg" class="img-fluid rounded shadow" alt="Orquesta en Vivo">
+          </div>
+
+          <!-- Texto e íconos -->
+          <div class="col-12 col-md-6">
+            <h4 class="fw-bold mb-3">Orquesta Sinfónica UNI</h4>
+            <p>Este sábado 15 a las 20:00 h, disfruta una noche especial en nuestra terraza principal.</p>
+            <ul class="list-unstyled">
+              <li><i class="bi bi-stars text-warning me-2"></i> Repertorio clásico y contemporáneo</li>
+              <li><i class="bi bi-cup-straw text-danger me-2"></i> Bebidas y aperitivos incluidos</li>
+              <li><i class="bi bi-geo-alt-fill text-success me-2"></i> Terraza con vista panorámica</li>
+              <li><i class="bi bi-ticket-perforated text-primary me-2"></i> Entrada gratuita para huéspedes</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Galería adicional -->
+        <div class="row mt-4 g-3">
+          <div class="col-12 text-center mb-2">
+            <h5 class="fw-semibold"><i class="bi bi-images me-2"></i> Momentos anteriores</h5>
+          </div>
+          <div class="col-6 col-md-4">
+            <img src="static/images/uni_tres.jpg" class="img-fluid rounded" alt="Concierto 1">
+          </div>
+          <div class="col-6 col-md-4">
+            <img src="static/images/uni_dos.jpg" class="img-fluid rounded" alt="Concierto 2">
+          </div>
+          <div class="col-6 col-md-4">
+            <img src="static/images/uni_uno.jpg" class="img-fluid rounded" alt="Concierto 3">
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="modal-footer justify-content-between py-2">
+        <small class="text-muted"><i class="bi bi-info-circle me-1"></i>Todo esto podrás disfrutar durante tu estadía en nuestro hotel.</small>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+           Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 
 

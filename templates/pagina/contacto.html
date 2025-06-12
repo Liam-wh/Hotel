@@ -6,61 +6,81 @@
 {% block content %}
 
 <div class="container py-5">
-    <div class="row g-4 gx-5">
 
-        <!-- Formulario de contacto -->
-        <div class="col-md-6">
-            <div class="card shadow border-1">
-                <div class="card-body">
-                    <h3 class="card-title mb-4">Contáctanos</h3>
-                    <form method="POST">
-                        <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Tu nombre"
-                                required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="correo" class="form-label">Correo electrónico</label>
-                            <input type="email" class="form-control" id="correo" name="correo"
-                                placeholder="Tu correo electrónico" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="mensaje" class="form-label">Mensaje</label>
-                            <textarea class="form-control" id="mensaje" name="mensaje" rows="4"
-                                placeholder="Escribe tu mensaje aquí..." required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">
-                            <i class="bi bi-send-fill me-1"></i>Enviar mensaje
-                        </button>
-                    </form>
+    <div class="row g-0 bg-body-secondary position-relative">
+        <div class="col-md-4 mb-md-0 p-md-4">
+            <img src="static/images/card_equipo.png" class="w-100 rounded-start" alt="Contáctanos">
+        </div>
+        <div class="col-md-8 p-4 ps-md-0 d-flex flex-column justify-content-center">
+            <h5 class="mt-0">¿Quieres comunicarte con nosotros?</h5>
+            <p>
+                Si tienes dudas, comentarios o necesitas más información, no dudes en escribirnos. Estamos para ayudarte
+                a tener la mejor experiencia posible.
+            </p>
+            <p>
+                Puedes contactarnos por nuestros medios oficiales como correo, teléfono o redes sociales. Estaremos
+                encantados de responderte lo antes posible.
+            </p>
+            <a href="#" class="btn btn-outline-primary mt-2 w-auto">Ir a la sección de contacto</a>
+        </div>
+    </div>
+
+
+    <!-- Sección de video -->
+    <div class="row justify-content-center mt-5 mb-5">
+        <div class="col-lg-8 col-md-10">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden mx-auto">
+                <div class="ratio ratio-16x9">
+                    <iframe src="https://www.youtube.com/embed/jSNT10tC9ts" title="Video de presentación"
+                        allowfullscreen class="w-100 h-100 border-0">
+                    </iframe>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Información de contacto -->
-        <div class="col-md-6">
-            <div class="card shadow border-1">
+    <!-- Sección de contacto -->
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow rounded-4 border-0 p-2">
                 <div class="card-body">
-                    <h3 class="card-title mb-4"><i class="bi bi-geo-alt-fill me-2 text-danger"></i>Información de
-                        contacto</h3>
-                    <p><i class="bi bi-geo-alt me-2 text-secondary"></i><strong>Dirección:</strong> Calle del Mar 123,
-                        Playa Paraíso, La Paz, Bolivia</p>
-                    <p><i class="bi bi-telephone-fill me-2 text-secondary"></i><strong>Teléfono:</strong> +591 2 123
-                        4567</p>
-                    <p><i class="bi bi-envelope-fill me-2 text-secondary"></i><strong>Email:</strong>
-                        contacto@hotelparaiso.com</p>
-                    <div class="ratio ratio-16x9 rounded mt-3">
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3827.1290133717626!2d-68.1192923851028!3d-16.500156332997825!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x915edf0cb5401e49%3A0x7eb42c9e9d06ea59!2sCentro%20de%20La%20Paz%2C%20La%20Paz%2C%20Bolivia!5e0!3m2!1ses!2sbo!4v1718033350000!5m2!1ses!2sbo"
-                            width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
+                    <h3 class="card-title mb-4 text-center">
+                        <i class="bi bi-geo-alt-fill text-danger me-2"></i>
+                        Información de contacto
+                    </h3>
+                    <div class="row g-4 align-items-center">
+                        <!-- Información -->
+                        <div class="col-md-6 ps-md-5">
+                            <ul class="list-unstyled">
+                                <li class="mb-3">
+                                    <i class="bi bi-geo-alt me-2 text-primary fs-5"></i>
+                                    <strong>Dirección:</strong><br>Av. Las Americas #105, La Paz, BO
+                                </li>
+                                <li class="mb-3">
+                                    <i class="bi bi-telephone-fill me-2 text-success fs-5"></i>
+                                    <strong>Teléfono:</strong><br>+591 631 769 43
+                                </li>
+                                <li>
+                                    <i class="bi bi-envelope-fill me-2 text-warning fs-5"></i>
+                                    <strong>Email:</strong><br>paraiso@email.com
+                                </li>
+                            </ul>
+                        </div>
 
-                    </div>
+                        <!-- Mapa -->
+                        <div class="col-md-6 pe-md-5">
+                            <div class="ratio ratio-16x9 rounded-3 overflow-hidden shadow-sm">
+                                <iframe
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3827.1290133717626!2d-68.1192923851028!3d-16.500156332997825!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x915edf0cb5401e49%3A0x7eb42c9e9d06ea59!2sCentro%20de%20La%20Paz%2C%20La%20Paz%2C%20Bolivia!5e0!3m2!1ses!2sbo!4v1718033350000!5m2!1ses!2sbo"
+                                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade">
+                                </iframe>
+                            </div>
+                        </div>
+                    </div> <!-- /row -->
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 

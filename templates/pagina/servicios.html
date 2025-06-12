@@ -18,7 +18,10 @@
                         <li class="list-group-item">Tratamientos faciales</li>
                         <li class="list-group-item">Ambiente zen</li>
                     </ul>
-                    <a href="#" class="btn btn-primary mt-4">Leer más</a>
+                    <button type="button" class="btn btn-primary mt-4" data-bs-toggle="modal"
+                            data-bs-target="#modal_spa">
+                            Veer más
+                    </button>
 
                 </div>
             </div>
@@ -36,7 +39,10 @@
                         <li class="list-group-item">Zona infantil divertida</li>
                         <li class="list-group-item">Área lounge</li>
                     </ul>
-                    <a href="#" class="btn btn-primary mt-4">Leer más</a>
+                    <button type="button" class="btn btn-primary mt-4" data-bs-toggle="modal"
+                            data-bs-target="#modal_piscina">
+                            Veer más
+                    </button>
                 </div>
             </div>
         </div>
@@ -53,7 +59,10 @@
                         <li class="list-group-item">Minibar y Smart TV</li>
                         <li class="list-group-item">Comodidad total</li>
                     </ul>
-                    <a href="#" class="btn btn-primary mt-4">Leer más</a>
+                     <button type="button" class="btn btn-primary mt-4" data-bs-toggle="modal"
+                            data-bs-target="#modal_habitaciones">
+                            Veer más
+                    </button>
                 </div>
             </div>
         </div>
@@ -69,8 +78,172 @@
                         <li class="list-group-item">Ambiente elegante</li>
                         <li class="list-group-item">Atención premium</li>
                     </ul>
-                    <a href="#" class="btn btn-primary mt-4">Leer más</a>
+                    <button type="button" class="btn btn-primary mt-4" data-bs-toggle="modal"
+                            data-bs-target="#modal_restaurante">
+                            Veer más
+                    </button>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Piscina y Spa-->
+<div class="modal fade" id="modal_spa" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="modalCardLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Header compacto -->
+            <div class="modal-header py-2">
+                <h1 class="modal-title fs-5" id="modalCardLabel">Servicio de Spa y Bienestar</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <div class="modal-body mb-1">
+                <div class="container">
+                    <div class="row gy-4 d-flex flex-column flex-md-row text-center">
+                        <div class="col">
+                            <img src="{{ url_for('static', filename='images/spa_masajes.jpg') }}"
+                                 class="img-fluid rounded" alt="spa 1">
+                            <p class="mt-2">Masajes relajantes  </p>
+                        </div>
+                        <div class="col">
+                            <img src="{{ url_for('static', filename='images/spa_facial.jpg') }}"
+                                 class="img-fluid rounded" alt="spa 2">
+                            <p class="mt-2">Tratamientos faciales</p>
+                        </div>
+                        <div class="col">
+                            <img src="{{ url_for('static', filename='images/spa_zen.jpg') }}"
+                                 class="img-fluid rounded" alt="spa 3">
+                            <p class="mt-2">Ambiente zen</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer con mensaje -->
+            <div class="modal-footer justify-content-center py-2">
+                <small class="text-muted">Disfruta de todos estos servicios en nuestro hotel.</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Piscina -->
+<div class="modal fade" id="modal_piscina" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="modalCardLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Header compacto -->
+            <div class="modal-header py-2">
+                <h1 class="modal-title fs-5" id="modalCardLabel">Servicio de Piscinas</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <div class="modal-body mb-1">
+                <div class="container">
+                    <div class="row gy-4 d-flex flex-column flex-md-row text-center">
+                        <div class="col">
+                            <img src="{{ url_for('static', filename='images/ps_climatizada.jpg') }}"
+                                 class="img-fluid rounded" alt="Piscina climatizada">
+                            <p class="mt-2">Piscina climatizada todo el año</p>
+                        </div>              
+                        <div class="col">
+                            <img src="{{ url_for('static', filename='images/ps_infantil.jpg') }}"
+                                 class="img-fluid rounded" alt="Piscina infantil">
+                            <p class="mt-2">Zona infantil divertida</p>
+                        </div>
+                        <div class="col">
+                            <img src="{{ url_for('static', filename='images/ps_area.jpg') }}"
+                                 class="img-fluid rounded" alt="area lounge">
+                            <p class="mt-2">Area lounge</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer con mensaje -->
+            <div class="modal-footer justify-content-center py-2">
+                <small class="text-muted">Disfruta de todos estos servicios en nuestro hotel.</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Habitaciones -->
+ <div class="modal fade" id="modal_habitaciones" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="modalCardLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Header compacto -->
+            <div class="modal-header py-2">
+                <h1 class="modal-title fs-5" id="modalCardLabel">Servicio de Habitaciones</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <div class="modal-body mb-1">
+                <div class="container">
+                    <div class="row gy-4 d-flex flex-column flex-md-row text-center">
+                        <div class="col">
+                            <img src="{{ url_for('static', filename='images/home3.jpg') }}"
+                                 class="img-fluid rounded" alt="cama">
+                            <p class="mt-2">Cama king-size</p>
+                        </div>              
+                        <div class="col">
+                            <img src="{{ url_for('static', filename='images/hab_bartv.jpg') }}"
+                                 class="img-fluid rounded" alt="minibar y tv">
+                            <p class="mt-2">Minibar y Smart TV</p>
+                        </div>
+                        <div class="col">
+                            <img src="{{ url_for('static', filename='images/hab_comodidad.jpg') }}"
+                                 class="img-fluid rounded" alt="comodidad">
+                            <p class="mt-2">Comodidad total</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer con mensaje -->
+            <div class="modal-footer justify-content-center py-2">
+                <small class="text-muted">Disfruta de todos estos servicios en nuestro hotel.</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Restaurante -->
+<div class="modal fade" id="modal_restaurante" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="modalCardLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Header compacto -->
+            <div class="modal-header py-2">
+                <h1 class="modal-title fs-5" id="modalCardLabel">Servicio de restaurante</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <div class="modal-body mb-1">
+                <div class="container">
+                    <div class="row gy-4 d-flex flex-column flex-md-row text-center">
+                        <div class="col">
+                            <img src="{{ url_for('static', filename='images/res_gourmet.jpg') }}"
+                                 class="img-fluid rounded" alt="gourmet">
+                            <p class="mt-2">Cosina gourmet  </p>
+                        </div>
+                        <div class="col">
+                            <img src="{{ url_for('static', filename='images/res_ambiente.jpg') }}"
+                                 class="img-fluid rounded" alt="ambiente">
+                            <p class="mt-2">Ambiente elegante</p>
+                        </div>
+                        <div class="col">
+                            <img src="{{ url_for('static', filename='images/res_vip.jpg') }}"
+                                 class="img-fluid rounded" alt="premium">
+                            <p class="mt-2">Atención premium</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer con mensaje -->
+            <div class="modal-footer justify-content-center py-2">
+                <small class="text-muted">Disfruta de todas estos servicios en nuestro hotel.</small>
             </div>
         </div>
     </div>
