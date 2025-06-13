@@ -45,15 +45,25 @@ html, body {
     z-index: 3;
 }
 
+
+.custom-indicators {
+    position: absolute;
+    bottom: 3%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+}
+
+
 /* Navbar centrado y sobrepuesto al carrusel */
 #navbar-centro {
     position: absolute;
-    bottom: 15px;
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 4;
     border-radius: 25px;
-    padding: 10px 10px;
+    padding: 5px 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     background-color: rgba(255, 255, 255, 0.7);
     /* fondo blanco con 60% de opacidad */
@@ -62,7 +72,7 @@ html, body {
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
+@media (max-width: 1100px) {
     #carrusel {
         height: 350px;
     }
@@ -83,7 +93,7 @@ html, body {
     #navbar-centro {
         flex-direction: column;
         padding: 10px;
-        width: 90%;
+        width: 85%;
         bottom: 10px;
     }
 
@@ -288,4 +298,47 @@ html, body {
 
 #texto_p {
     font-size: clamp(0.85rem, 2.5vw, 1.1rem);
+}
+
+/* inputs.css - Reutilizable aunque uses id diferentes */
+[id$="-container"] {
+    position: relative;
+    margin-bottom: 1.3rem;
+}
+
+[id$="-input"] {
+    background-color: #ffffff;
+    border: 1px solid #d0d4da;
+    color: #111;
+    border-radius: 8px;
+    padding: 1rem 2.8rem 0.3rem 0.8rem;
+    width: 100%;
+    outline: none;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+[id$="-input"]:focus {
+    border-color: #4b9fff;
+    box-shadow: 0 0 0 0.2rem rgba(75, 159, 255, 0.2);
+}
+
+[id$="-label"] {
+    position: absolute;
+    left: 0.8rem;
+    top: 0.75rem;
+    color: #666;
+    font-size: 0.95rem;
+    transition: 0.2s ease;
+    pointer-events: none;
+    background-color: #ffffff;
+    padding: 0 0.3rem;
+}
+
+[id$="-input"]:focus + [id$="-label"],
+[id$="-input"]:not(:placeholder-shown) + [id$="-label"] {
+    top: -0.6rem;
+    font-size: 0.9rem;
+    color: #4b9fff;
 }
