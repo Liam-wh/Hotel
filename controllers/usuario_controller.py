@@ -6,15 +6,10 @@ from werkzeug.security import check_password_hash
 
 usuario_bp = Blueprint('usuario', __name__, url_prefix='/usuarios')
 
-@usuario_bp.route('/sistema_admin')
+@usuario_bp.route('/sistema')
 @login_required
-def sistema_admin():
-    return usuario_view.sistema_admin()
-
-@usuario_bp.route('/sistema_resep')
-@login_required
-def sistema_resep():
-    return usuario_view.sistema_resep()
+def sistema():
+    return usuario_view.sistema()
 
 @usuario_bp.route('/login', methods=['POST'])
 def login():
@@ -30,9 +25,9 @@ def login():
         flash("Inicio de sesión exitoso", "user_exito")
 
         if usuario.rol == 'administrador':
-            return redirect(url_for('usuario.sistema_admin'))
-        elif usuario.rol == 'recepcionista':
-            return redirect(url_for('usuario.sistema_resep'))
+            return redirect(url_for('usuario.sistema'))
+        elif usuario.rol == 'recepcionista': 
+            return redirect(url_for('usuario.sistema'))
         else:
             flash("Rol no reconocido", "user_error")
             return redirect(url_for('inicio') + '#loginUsuario')
@@ -51,6 +46,7 @@ def logout():
 
 
 @usuario_bp.route('/')
+@login_required
 def index():
     usuarios = Usuario.get_all()
     return usuario_view.list(usuarios)
@@ -98,7 +94,7 @@ def edit(id):
         return redirect(url_for('usuario.index'))
     return usuario_view.edit(usuario)
 
-@usuario_bp.route('/delete/<int:id>', methods=['POST'])
+@usuario_bp.route('/delete/<int:id>')
 def delete(id):
     usuario = Usuario.get_by_id(id)
     if usuario:

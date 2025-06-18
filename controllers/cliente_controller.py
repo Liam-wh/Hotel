@@ -40,13 +40,12 @@ def logout():
 @cliente_bp.route('/register', methods=['POST'])
 def register():
     nombre = request.form.get('nombre', '').strip()
-    apellido = request.form.get('apellido', '').strip()
     documento = request.form.get('documento', '').strip()
     correo = request.form.get('correo', '').strip()
     telefono = request.form.get('telefono', '').strip()
 
     # Validaciones simples
-    if not nombre or not apellido or not documento:
+    if not nombre  or not documento:
         flash("Todos los campos obligatorios deben estar completos.", "error")
         return redirect(url_for('inicio') + '#registroCliente')
 
@@ -57,7 +56,7 @@ def register():
         return redirect(url_for('inicio') + '#registroCliente')
 
     # Crear y guardar el cliente
-    cliente = Cliente(nombre=nombre, apellido=apellido, documento=documento, correo=correo, telefono=telefono)
+    cliente = Cliente(nombre=nombre, documento=documento, correo=correo, telefono=telefono)
     cliente.save()
 
     flash("¡Registro exitoso! Ya puedes iniciar sesión.", "success")
@@ -75,16 +74,15 @@ def index():
 def create():
     if request.method == 'POST':
         nombre = request.form.get('nombre', '').strip()
-        apellido = request.form.get('apellido', '').strip()
         documento = request.form.get('documento', '').strip()
         correo = request.form.get('correo', '').strip()
         telefono = request.form.get('telefono', '').strip()
 
-        if not nombre or not apellido or not documento or not correo:
-            flash('Los campos nombre, apellido, documento y correo son obligatorios.', 'danger')
+        if not nombre or not documento or not correo:
+            flash('Los campos nombre, documento y correo son obligatorios.', 'danger')
             return redirect(url_for('cliente.index'))
 
-        cliente = Cliente(nombre=nombre, apellido=apellido, documento=documento, correo=correo, telefono=telefono)
+        cliente = Cliente(nombre=nombre, documento=documento, correo=correo, telefono=telefono)
         cliente.save()
         flash('Cliente registrado correctamente.', 'success')
         return redirect(url_for('cliente.index'))
@@ -102,22 +100,21 @@ def edit(id):
 
     if request.method == 'POST':
         nombre = request.form.get('nombre', '').strip()
-        apellido = request.form.get('apellido', '').strip()
         documento = request.form.get('documento', '').strip()
         correo = request.form.get('correo', '').strip()
         telefono = request.form.get('telefono', '').strip()
 
-        if not nombre or not apellido or not documento or not correo:
-            flash('Los campos nombre, apellido, documento y correo son obligatorios.', 'danger')
+        if not nombre or not documento or not correo:
+            flash('Los campos nombre, documento y correo son obligatorios.', 'danger')
             return cliente_view.edit(cliente)
 
-        cliente.update(nombre=nombre, apellido=apellido, documento=documento, correo=correo, telefono=telefono)
+        cliente.update(nombre=nombre, documento=documento, correo=correo, telefono=telefono)
         flash('Cliente actualizado correctamente.', 'success')
         return redirect(url_for('cliente.index'))
     
     return cliente_view.edit(cliente)
 
-@cliente_bp.route('/delete/<int:id>', methods=['POST'])
+@cliente_bp.route('/delete/<int:id>')
 def delete(id):
     cliente = Cliente.get_by_id(id)
     if cliente:

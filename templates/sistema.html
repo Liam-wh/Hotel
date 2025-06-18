@@ -1,0 +1,225 @@
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="{{ url_for('static', filename='images/sistema.png') }}" type="image/png">
+    <title>{% block title %}HOTEL{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="main-content">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+
+                <!-- Botón OFFCANVAS (solo visible en md y sm) -->
+                <button class="btn btn-dark rounded-circle shadow d-lg-none me-2 order-0 p-2" type="button"
+                    data-bs-toggle="offcanvas" data-bs-target="#offcanvasNav" aria-controls="offcanvasNav" title="Menú">
+                    <i class="bi bi-list fs-4"></i>
+                </button>
+
+
+                <!-- LOGO -->
+                <a class="navbar-brand d-flex align-items-center order-1 order-lg-0" href="#">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="me-2" height="30">
+                    <strong>RESERVAS</strong>
+                </a>
+
+                <!-- NAVBAR en pantallas grandes -->
+                <div class="collapse navbar-collapse d-none d-lg-block" id="navbarNav">
+                    <div class="navbar-nav ms-3">
+                        {% if usuario and usuario.rol == 'administrador' %}
+                        <a class="nav-link {{ is_active('/clientes/') }}" href="/clientes/">Clientes</a>
+                        <a class="nav-link {{ is_active('/habitaciones/') }}" href="/habitaciones/">Habitaciones</a>
+                        <a class="nav-link {{ is_active('/servicios/') }}" href="/servicios/">Servicios</a>
+                        <a class="nav-link {{ is_active('/reservas/') }}" href="/reservas/">Reservas</a>
+                        <a class="nav-link {{ is_active('/reserva_servicios/') }}" href="/reserva_servicios/">Reserva de
+                            Servicio</a>
+                        <a class="nav-link {{ is_active('/usuarios/') }}" href="/usuarios/">Usuarios</a>
+
+                        {% elif usuario and usuario.rol == 'recepcionista' %}
+                        <a class="nav-link {{ is_active('/clientes/') }}" href="/clientes/">Clientes</a>
+                        <a class="nav-link {{ is_active('/reservas/') }}" href="/reservas/">Reservas</a>
+                        <a class="nav-link {{ is_active('/reserva_servicios/') }}" href="/reserva_servicios/">Reserva de
+                            Servicio</a>
+
+                        {% elif cliente %}
+                        <a class="nav-link {{ is_active('/reservas/') }}" href="/reservas/">Reservas</a>
+                        {% endif %}
+                    </div>
+                </div>
+
+
+                <!-- USUARIO (SIEMPRE A LA DERECHA) -->
+                {% if usuario or cliente %}
+                <div class="ms-auto d-flex align-items-center order-2">
+                    <div class="btn-group">
+                        <button class="btn dropdown-toggle p-0 border-0 text-white" type="button"
+                            data-bs-toggle="dropdown" aria-expanded="false" style="background: transparent;">
+                            <i class="bi bi-person-circle fs-3"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li style="padding: 10px;">
+                                <div class="dropdown-item d-flex align-items-center">
+                                    <i class="bi bi-person-circle text-success fs-1 me-3"></i>
+                                    <div class="d-flex flex-column">
+                                        {% if usuario %}
+                                        <span class="fw-semibold">{{ usuario.nombre }}</span>
+                                        <span
+                                            class="bg-{% if usuario.rol == 'administrador' %}success{% elif usuario.rol == 'recepcionista' %}primary{% endif %} text-white rounded-pill small text-center mt-1">
+                                            {{ usuario.rol }}
+                                        </span>
+                                        {% elif cliente %}
+                                        <span class="fw-semibold">{{ cliente.nombre }}</span>
+                                        <span class="bg-secondary text-white rounded-pill small text-center mt-1">
+                                            Cliente
+                                        </span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Perfil</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" onclick="return confirm('¿Está seguro de cerrar sesión?')"
+                                    href="{{ url_for('usuario.logout') }}">
+                                    <i class="bi bi-box-arrow-right me-2"></i>Cerrar sesión
+                                </a></li>
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+
+
+            </div>
+        </nav>
+
+        <!-- OFFCANVAS para pantallas pequeñas/medianas -->
+        <div class="offcanvas offcanvas-start d-lg-none bg-dark text-white" data-bs-backdrop="static" tabindex="-1"
+            id="offcanvasNav" aria-labelledby="offcanvasNavLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavLabel">Menú</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                    aria-label="Cerrar"></button>
+            </div>
+            <div class="offcanvas-body">
+                {% if usuario and usuario.rol == 'administrador' %}
+                <a class="nav-link text-white ms-2" href="/clientes/">ㅤClientes</a>
+                <a class="nav-link text-white ms-2" href="/habitaciones/">ㅤHabitaciones</a>
+                <a class="nav-link text-white ms-2" href="/servicios/">ㅤServicios</a>
+                <a class="nav-link text-white ms-2" href="/reservas/">ㅤReservas</a>
+                <a class="nav-link text-white ms-2" href="/reserva_servicios/">ㅤReserva de Servicio</a>
+                <a class="nav-link text-white ms-2" href="/usuarios/">ㅤUsuarios</a>
+
+                {% elif usuario and usuario.rol == 'recepcionista' %}
+                <a class="nav-link text-white ms-2" href="/clientes/">ㅤClientes</a>
+                <a class="nav-link text-white ms-2" href="/reservas/">ㅤReservas</a>
+                <a class="nav-link text-white ms-2" href="/reserva_servicios/">ㅤReserva de Servicio</a>
+
+                {% elif cliente %}
+                <a class="nav-link text-white ms-2" href="/reservas/">ㅤReservas</a>
+                {% endif %}
+            </div>
+
+        </div>
+
+
+
+        <div class="container">
+            {% block content %}
+
+
+            {% endblock %}
+        </div>
+
+        <!-- Modal para mostrar mensajes flash sesion exitoso-->
+        <div class="modal fade" id="sesionExito" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog ">
+                <div class="modal-content text-center border-0 shadow">
+                    <div class="modal-body p-4">
+                        <i class="bi bi-check-circle-fill text-success mb-3" style="font-size: 3rem;"></i>
+                        <h5 class="mt-2 mb-2">¡Sesion iniciada con éxito!</h5>
+                        <p class="text-muted">Bienvenido
+                            <span class="fw-bold"> {{ usuario.nombre }} </span>
+                            al sistema de Reservas.
+                        </p>
+                        <div class="d-grid">
+                            <button class="btn btn-success " data-bs-dismiss="modal">Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-light pt-4 px-3 text-center text-md-start"
+            style="background-color: rgb(0,30,45); font-size: 0.95rem;">
+            <div class="container text-center">
+                <div class="row gy-3 justify-content-center align-items-center mb-3">
+
+                    <div class="col-12 col-md-4 d-flex justify-content-center align-items-center gap-2">
+                        <i class="bi bi-gem fs-5 text-primary"></i>
+                        <span class="fw-semibold">Hotel Paraíso</span>
+                    </div>
+
+                    <div class="col-12 col-md-4 d-flex justify-content-center align-items-center gap-2">
+                        <i class="bi bi-geo-alt-fill fs-5 text-warning"></i>
+                        <span>Av. Las Américas #105, La Paz</span>
+                    </div>
+
+                    <div class="col-12 col-md-4 d-flex justify-content-center align-items-center gap-2">
+                        <i class="bi bi-telephone-fill fs-5 text-success"></i>
+                        <span>+591 631 769 43</span>
+                    </div>
+                </div>
+
+                <hr class="bg-secondary my-2">
+
+                <div class="text-center pb-3 small">
+                    <i class="bi bi-c-circle me-1"></i>2025 <strong>Hotel Paraíso</strong>. Todos los derechos
+                    reservados.
+                </div>
+            </div>
+
+
+
+
+        </footer>
+
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+        crossorigin="anonymous"></script>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const flashCategory = "{{ category }}";
+
+            if (flashCategory === "user_exito") {
+                const exitoModal = new bootstrap.Modal(document.getElementById('sesionExito'));
+                exitoModal.show();
+            }
+        });
+    </script>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <script src="main.js"></script>
+</body>
+
+</html>

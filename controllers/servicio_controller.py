@@ -1,10 +1,12 @@
 from flask import request, redirect, url_for, Blueprint, flash
 from models.servicio_model import Servicio
 from views import servicio_view
+from flask_login import login_required
 
 servicio_bp = Blueprint('servicio', __name__, url_prefix='/servicios')
 
 @servicio_bp.route('/')
+@login_required
 def index():
     servicios = Servicio.get_all()
     return servicio_view.list(servicios)
@@ -58,7 +60,7 @@ def edit(id):
         return redirect(url_for('servicio.index'))
     return servicio_view.edit(servicio)
 
-@servicio_bp.route('/delete/<int:id>', methods=['POST'])
+@servicio_bp.route('/delete/<int:id>')
 def delete(id):
     servicio = Servicio.get_by_id(id)
     if servicio:

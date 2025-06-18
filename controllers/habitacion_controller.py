@@ -1,10 +1,13 @@
 from flask import request, redirect, url_for, Blueprint, flash
 from models.habitacion_model import Habitacion
 from views import habitacion_view
+from flask_login import login_required
+
 
 habitacion_bp = Blueprint('habitacion', __name__, url_prefix='/habitaciones')
 
 @habitacion_bp.route('/')
+@login_required
 def index():
     habitaciones = Habitacion.get_all()
     return habitacion_view.list(habitaciones)
@@ -14,9 +17,8 @@ def create():
     if request.method == 'POST':
         numero = request.form.get('numero', '').strip()
         tipo = request.form.get('tipo', '').strip()
-        descripcion = request.form.get('descripcion', '').strip()
         precio = request.form.get('precio', '').strip()
-
+        estado = "Disponible"
         if not numero or not tipo or not precio:
             flash('Número, tipo y precio son obligatorios.', 'error')
             return habitacion_view.create()
@@ -27,11 +29,14 @@ def create():
             flash('Precio debe ser un número válido.', 'error')
             return habitacion_view.create()
 
-        habitacion = Habitacion(numero, tipo, descripcion, precio)
+        habitacion = Habitacion(numero, tipo, precio, estado)
         habitacion.save()
         flash('Habitación creada correctamente.', 'success')
         return redirect(url_for('habitacion.index'))
     return habitacion_view.create()
+
+
+
 
 @habitacion_bp.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit(id):
@@ -42,8 +47,8 @@ def edit(id):
     if request.method == 'POST':
         numero = request.form.get('numero', '').strip()
         tipo = request.form.get('tipo', '').strip()
-        descripcion = request.form.get('descripcion', '').strip()
         precio = request.form.get('precio', '').strip()
+        estado = request.form.get('estado', '').strip()
 
         if not numero or not tipo or not precio:
             flash('Número, tipo y precio son obligatorios.', 'error')
@@ -55,12 +60,12 @@ def edit(id):
             flash('Precio debe ser un número válido.', 'error')
             return habitacion_view.edit(habitacion)
 
-        habitacion.update(numero=numero, tipo=tipo, descripcion=descripcion, precio=precio)
+        habitacion.update(numero=numero, tipo=tipo, precio=precio, estado=estado)
         flash('Habitación actualizada correctamente.', 'success')
         return redirect(url_for('habitacion.index'))
     return habitacion_view.edit(habitacion)
 
-@habitacion_bp.route('/delete/<int:id>', methods=['POST'])
+@habitacion_bp.route('/delete/<int:id>')
 def delete(id):
     habitacion = Habitacion.get_by_id(id)
     if habitacion:

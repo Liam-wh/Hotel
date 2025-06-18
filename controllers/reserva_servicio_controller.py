@@ -1,14 +1,20 @@
 from flask import request, redirect, url_for, Blueprint, flash
 from models.reserva_servicio_model import ReservaServicio
+from models.reserva_model import Reserva
+from models.servicio_model import Servicio
 from views import reserva_servicio_view
+from flask_login import login_required
 
 reserva_servicio_bp = Blueprint('reserva_servicio', __name__, url_prefix='/reserva_servicios')
 
 @reserva_servicio_bp.route('/')
+@login_required
 def index():
     # Lista todas las asociaciones reserva-servicio
-    registros = ReservaServicio.get_all()
-    return reserva_servicio_view.list(registros)
+    reserva_servicio = ReservaServicio.get_all()
+    reservas = Reserva.get_all()
+    servicios = Servicio.get_all()
+    return reserva_servicio_view.list(reserva_servicio,reservas,servicios)
 
 @reserva_servicio_bp.route('/create', methods=['GET', 'POST'])
 def create():
@@ -56,7 +62,7 @@ def edit(id):
 
     return reserva_servicio_view.edit(registro)
 
-@reserva_servicio_bp.route('/delete/<int:id>', methods=['POST'])
+@reserva_servicio_bp.route('/delete/<int:id>')
 def delete(id):
     registro = ReservaServicio.get_by_id(id)
     if registro:

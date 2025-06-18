@@ -1,0 +1,174 @@
+{% extends 'sistema.html' %}
+
+{% block title %} SISTEMA | HABITACIONES {% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 mt-4">
+    <h3 class="fw-semibold text-dark">
+        Lista de Habitaciones
+    </h3>
+    <a href="{{ url_for('habitacion.create') }}" class="btn btn-success" data-bs-toggle="modal"
+        data-bs-target="#registroHabitacionModal">
+        <i class="bi bi-plus-circle me-1"></i> Nueva Habitación
+    </a>
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<div class="alert alert-{{ category }} alert-dismissible fade show shadow-sm rounded border-0 px-4 py-3 mt-3 animate__animated animate__fadeInDown"
+    role="alert" style="font-size: 1rem;">
+    <div class="d-flex align-items-center">
+        <i class="bi 
+            {% if category == 'success' %}bi-check-circle-fill text-success
+            {% elif category == 'danger' %}bi-x-circle-fill text-danger
+            {% elif category == 'warning' %}bi-exclamation-triangle-fill text-warning
+            {% elif category == 'info' %}bi-info-circle-fill text-info
+            {% else %}bi-bell-fill text-secondary{% endif %} 
+            me-2 fs-5"></i>
+        <span>{{ message }}</span>
+    </div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+
+<div class="table-responsive" style="overflow-x: auto;">
+    <table class="table table-hover align-middle shadow-sm rounded overflow-hidden table-responsive">
+        <thead class="table-dark border-1">
+            <tr>
+                <th>ID</th>
+                <th>Número</th>
+                <th>Tipo</th>
+                <th>Precio</th>
+                <th>Estado</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="border-1">
+            {% for item in habitaciones %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.numero }}</td>
+                <td>{{ item.tipo }}</td>
+                <td>{{ item.precio | round(2) }}</td>
+                <td>
+                    <span class="badge 
+                {% if item.estado == 'Disponible' %}bg-success
+                {% elif item.estado == 'Ocupada' %}bg-danger
+                {% elif item.estado == 'Mantenimiento' %}bg-warning text-dark
+                {% else %}bg-secondary
+                {% endif %}">
+                        {{ item.estado }}
+                    </span>
+                </td>
+                <td class="text-center">
+                    <div class="d-flex flex-column flex-sm-row justify-content-center align-items-center gap-2">
+                        <button class="btn btn-warning btn-sm d-flex align-items-center" data-bs-toggle="modal"
+                            data-bs-target="#editarHabitacionModal{{ item.id }}">
+                            <i class="bi bi-pencil-square me-1"></i><span class="d-none d-md-inline">Editar</span>
+                        </button>
+                        <a href="{{ url_for('habitacion.delete', id=item.id) }}"
+                            class="btn btn-danger btn-sm d-flex align-items-center" title="Eliminar"
+                            onclick="return confirm('¿Estás seguro de eliminar esta habitación?');">
+                            <i class="bi bi-trash-fill me-1"></i><span class="d-none d-md-inline">Eliminar</span>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+
+            <!-- Modal Editar Habitación -->
+            <div class="modal fade" id="editarHabitacionModal{{ item.id }}" tabindex="-1"
+                aria-labelledby="editarHabitacionModalLabel{{ item.id }}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content shadow-lg">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editarHabitacionModalLabel{{ item.id }}">Actualizar Habitación
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Cerrar"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ url_for('habitacion.edit', id=item.id) }}" method="POST">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="numero" value="{{ item.numero }}"
+                                        required>
+                                    <label>Número</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" name="tipo" required>
+                                        <option value="Simple" {% if item.tipo=="Simple" %}selected{% endif %}>Simple
+                                        </option>
+                                        <option value="Doble" {% if item.tipo=="Doble" %}selected{% endif %}>Doble
+                                        </option>
+                                        <option value="Suite" {% if item.tipo=="Suite" %}selected{% endif %}>Suite
+                                        </option>
+                                        <option value="Familiar" {% if item.tipo=="Familiar" %}selected{% endif %}>
+                                            Familiar
+                                        </option>
+                                    </select>
+                                    <label>Tipo de Habitación</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="precio" name="precio"
+                                        placeholder="Precio" step="0.01" value="{{ item.precio | round(2) }}" required>
+                                    <label>Precio</label>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary btn-lg mt-3">
+                                        <i class="bi bi-check-circle-fill me-2"></i>Actualizar Habitación
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal Registro de Habitación -->
+<div class="modal fade" id="registroHabitacionModal" tabindex="-1" aria-labelledby="registroHabitacionModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registroHabitacionModalLabel">Registrar Habitación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ url_for('habitacion.create') }}" method="POST">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="numero" name="numero" placeholder="Número" required>
+                        <label for="numero">Número</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <select class="form-select" id="tipo" name="tipo" required>
+                            <option value="Simple">Simple</option>
+                            <option value="Doble">Doble</option>
+                            <option value="Suite">Suite</option>
+                            <option value="Familiar">Familiar</option>
+                        </select>
+                        <label for="tipo">Tipo</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="precio" name="precio" placeholder="Precio"
+                            step="0.01" required>
+                        <label for="precio">Precio</label>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success btn-lg">
+                            <i class="bi bi-check-circle-fill me-2"></i>Registrar Habitación
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,178 @@
+{% extends 'sistema.html' %}
+
+{% block title %} SISTEMA | USUARIOS {% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 mt-4">
+    <h3 class="fw-semibold text-dark">
+        Lista de Clientes
+    </h3>
+    <a href="{{ url_for('cliente.create') }}" class="btn btn-success " data-bs-toggle="modal"
+        data-bs-target="#registroClienteModal">
+        <i class="bi bi-plus-circle me-1"></i> Nuevo Cliente
+    </a>
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<div class="alert alert-{{ category }} alert-dismissible fade show shadow-sm rounded border-0 px-4 py-3 mt-3 animate__animated animate__fadeInDown"
+    role="alert" style="font-size: 1rem;">
+    <div class="d-flex align-items-center">
+        <i class="bi 
+            {% if category == 'success' %}bi-check-circle-fill text-success
+            {% elif category == 'danger' %}bi-x-circle-fill text-danger
+            {% elif category == 'warning' %}bi-exclamation-triangle-fill text-warning
+            {% elif category == 'info' %}bi-info-circle-fill text-info
+            {% else %}bi-bell-fill text-secondary{% endif %} 
+            me-2 fs-5"></i>
+        <span>{{ message }}</span>
+    </div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+
+<div class="table-responsive" style="overflow-x: auto;">
+    <table class="table table-hover align-middle shadow-sm rounded overflow-hidden">
+        <thead class="table-dark border-1">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>DNI</th>
+                <th>Correo</th>
+                <th>Teléfono</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="border-1">
+            {% for item in clientes %}
+            <tr>
+                <td>{{item.id}}</td>
+                <td>{{item.nombre}}</td>
+                <td>{{item.documento}}</td>
+                <td>{{item.correo}}</td>
+                <td>{{item.telefono}}</td>
+
+                <td class="text-center">
+                    <div class="d-flex flex-column flex-sm-row justify-content-center align-items-center gap-2">
+
+                        <button class="btn btn-warning btn-sm d-flex align-items-center" data-bs-toggle="modal"
+                            data-bs-target="#editarClienteModal{{ item.id }}">
+                            <i class="bi bi-pencil-square me-1"></i><span class="d-none d-md-inline">Editar</span>
+                        </button>
+
+                        <a href="{{ url_for('cliente.delete', id=item.id) }}"
+                            class="btn btn-danger btn-sm d-flex align-items-center" title="Eliminar"
+                            onclick="return confirm('¿Estás seguro de eliminar este usuario?');">
+                            <i class="bi bi-trash-fill me-1"></i>
+                            <span class="d-none d-md-inline">Eliminar</span>
+                        </a>
+                    </div>
+                </td>
+
+            </tr>
+
+            <!-- Modal único para este cliente -->
+            <div class="modal fade" id="editarClienteModal{{ item.id }}" tabindex="-1"
+                aria-labelledby="editarClienteModalLabel{{ item.id }}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content shadow-lg">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editarClienteModalLabel{{ item.id }}">Actualizar Cliente</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Cerrar"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ url_for('cliente.edit', id=item.id) }}" method="POST">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="nombre" value="{{ item.nombre }}"
+                                        required>
+                                    <label>Nombre</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="documento"
+                                        value="{{ item.documento }}" required>
+                                    <label>Número de Documento</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="email" class="form-control" name="correo" value="{{ item.correo }}"
+                                        required>
+                                    <label>Correo electrónico</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="telefono" value="{{ item.telefono }}"
+                                        required>
+                                    <label>Teléfono</label>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary btn-lg mt-3">
+                                        <i class="bi bi-check-circle-fill me-2"></i>Actualizar Cliente
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+
+<!-- Modal de Registro de Usuario -->
+<div class="modal fade" id="registroClienteModal" tabindex="-1" aria-labelledby="registroClienteModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registroClienteModalLabel">
+                    Registro de Usuario
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ url_for('cliente.create') }}" method="POST">
+
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required>
+                        <label for="nombre">Nombre</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="documento" name="documento" placeholder="Documento"
+                            required>
+                        <label for="documento">Numero de Documento</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="correo" name="correo"
+                            placeholder="Correo electrónico" required>
+                        <label for="correo">Correo electrónico</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Teléfono"
+                            required>
+                        <label for="telefono">Teléfono</label>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success btn-lg">
+                            <i class="bi bi-check-circle-fill me-2"></i>Registrar Cliente
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

@@ -1,14 +1,35 @@
 /* ESTILOS DE BASE.HTML */
-html, body {
-  height: 100%;
-  margin: 0;
-  overflow: hidden; /* Evita scroll del body */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    /* Evita scroll del body */
 }
 
 #main-content {
-  height: calc(100% - 0px); /* Ajusta si tu footer mide 200px, por ejemplo */
-  overflow-y: auto;
+    height: calc(100% - 0px);
+    /* Ajusta si tu footer mide 200px, por ejemplo */
+    overflow-y: auto;
 }
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+#main-content {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Permite scroll si el contenido es largo */
+}
+
+.container {
+    flex: 1; /* Ocupa todo el espacio disponible y empuja el footer al fondo */
+}
+
 
 #carrusel {
     position: relative;
@@ -165,17 +186,38 @@ html, body {
 
 /* Animación de escribir y borrar */
 @keyframes typing-erasing {
-    0% { width: 0 }
-    25% { width: 100% }
-    50% { width: 100% }
-    75% { width: 0 }
-    100% { width: 0 }
+    0% {
+        width: 0
+    }
+
+    25% {
+        width: 100%
+    }
+
+    50% {
+        width: 100%
+    }
+
+    75% {
+        width: 0
+    }
+
+    100% {
+        width: 0
+    }
 }
 
 /* Cursor parpadeante (si lo deseas agregar como efecto) */
 @keyframes blink-caret {
-    from, to { border-color: transparent }
-    50% { border-color: white }
+
+    from,
+    to {
+        border-color: transparent
+    }
+
+    50% {
+        border-color: white
+    }
 }
 
 /* Responsive: texto más pequeño y centrado en móviles */
@@ -191,7 +233,9 @@ html, body {
         font-size: 1.4rem;
     }
 
-    .card-text, .card-title, .text-container p {
+    .card-text,
+    .card-title,
+    .text-container p {
         font-size: 1.4rem;
     }
 
@@ -203,7 +247,8 @@ html, body {
 
 @media (max-width: 768px) {
     #img-welcome {
-        height: 350px !important; /* asegúrate de forzar esta altura */
+        height: 350px !important;
+        /* asegúrate de forzar esta altura */
     }
 
     .text-container p {
@@ -224,11 +269,13 @@ html, body {
 #card-sombra {
     border: 0;
     box-shadow: 0 0 1rem rgba(150, 150, 150, 0.2);
-    transition: box-shadow 0.3s ease; /* La transición debe ir aquí para aplicarse tanto en estado normal como en hover */
+    transition: box-shadow 0.3s ease;
+    /* La transición debe ir aquí para aplicarse tanto en estado normal como en hover */
 }
 
 #card-sombra:hover {
-    box-shadow: 0 1rem 1.8rem rgba(150, 150, 150, 0.4); /* sombra plomo grande */
+    box-shadow: 0 1rem 1.8rem rgba(150, 150, 150, 0.4);
+    /* sombra plomo grande */
 }
 
 
@@ -240,7 +287,7 @@ html, body {
     object-fit: cover;
 }
 
-#card-mov{
+#card-mov {
     box-shadow: 0 0 1rem rgba(150, 150, 150, 0.2);
     border: 0;
 }
@@ -267,6 +314,33 @@ html, body {
 
 #espacio {
     width: 300px;
+}
+
+#card-new {
+    box-shadow: 0 0 1rem rgba(150, 150, 150, 0.2);
+    border: 0;
+}
+
+#card-new:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 20px rgba(150, 150, 150, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+/* estilo para noticias NEW*/
+#card-new::before {
+    content: "NEW";
+    position: absolute;
+    top: 10px;
+    left: -5px;
+    background: #ff4081;
+    color: white;
+    font-weight: bold;
+    padding: 5px 10px;
+    font-size: 0.75rem;
+    border-radius: 0 5px 5px 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 /* Testimonios */
@@ -336,9 +410,16 @@ html, body {
     padding: 0 0.3rem;
 }
 
-[id$="-input"]:focus + [id$="-label"],
-[id$="-input"]:not(:placeholder-shown) + [id$="-label"] {
+[id$="-input"]:focus+[id$="-label"],
+[id$="-input"]:not(:placeholder-shown)+[id$="-label"] {
     top: -0.6rem;
     font-size: 0.9rem;
     color: #4b9fff;
+}
+
+/* Estilos para el menú de la navegación */
+.offcanvas-body .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    /* efecto sutil blanco */
+    border-radius: 5px;
 }

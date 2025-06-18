@@ -1,0 +1,116 @@
+{% extends 'sistema.html' %}
+
+{% block title %} SISTEMA | RESERVA SERVICIOS {% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 mt-4">
+  <h3 class="fw-semibold text-dark">Reserva de Servicios</h3>
+  <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#registroResServicioModal">
+    <i class="bi bi-plus-circle me-1"></i> Agregar Servicios
+  </a>
+</div>
+
+<!-- Flash messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }} alert-dismissible fade show shadow-sm rounded border-0 px-4 py-3 mt-3 animate__animated animate__fadeInDown" role="alert">
+        <div class="d-flex align-items-center">
+          <i class="bi 
+            {% if category == 'success' %}bi-check-circle-fill text-success
+            {% elif category == 'danger' %}bi-x-circle-fill text-danger
+            {% elif category == 'warning' %}bi-exclamation-triangle-fill text-warning
+            {% elif category == 'info' %}bi-info-circle-fill text-info
+            {% else %}bi-bell-fill text-secondary{% endif %}
+            me-2 fs-5"></i>
+          <span>{{ message }}</span>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<div class="table-responsive" style="overflow-x: auto;">
+  <table class="table table-hover align-middle shadow-sm rounded overflow-hidden">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Reserva</th>
+        <th>Cliente</th>
+        <th>Servicio</th>
+        <th>Cantidad</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for rs in reservas_servicios %}
+      <tr>
+        <td>{{ rs.id }}</td>
+        <td>#{{ rs.reserva.id }}</td>
+        <td>{{ rs.reserva.cliente.nombre }}</td>
+        <td>{{ rs.servicio.nombre }}</td>
+        <td>{{ rs.cantidad }}</td>
+        <td>
+          <div class="d-flex flex-wrap gap-2">
+            <a href="{{ url_for('reserva_servicio.delete', id=rs.id) }}" class="btn btn-danger btn-sm"
+               onclick="return confirm('¿Deseas eliminar este servicio de la reserva?');">
+              <i class="bi bi-trash-fill"></i> Eliminar
+            </a>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+
+<!-- Modal para Registrar Servicio a Reserva -->
+<div class="modal fade" id="registroResServicioModal" tabindex="-1" aria-labelledby="registroResServicioModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content shadow-lg">
+      <div class="modal-header">
+        <h5 class="modal-title" id="registroResServicioModalLabel">Agregar Servicio a Reserva</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{{ url_for('reserva_servicio.create') }}" method="POST">
+
+          <div class="mb-3">
+            <label class="form-label">Reserva</label>
+            <select class="form-select" name="reserva_id" required>
+              <option value="" selected disabled>Seleccione una reserva</option>
+              {% for reserva in reservas %}
+              <option value="{{ reserva.id }}">#{{ reserva.id }} - {{ reserva.cliente.nombre }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Servicio</label>
+            <select class="form-select" name="servicio_id" required>
+              <option value="" selected disabled>Seleccione un servicio</option>
+              {% for servicio in servicios %}
+              <option value="{{ servicio.id }}">{{ servicio.nombre }} (Bs. {{ servicio.precio }})</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-floating mb-3">
+            <input type="number" class="form-control" name="cantidad" min="1" value="1" required>
+            <label>Cantidad</label>
+          </div>
+
+          <div class="d-grid">
+            <button type="submit" class="btn btn-success btn-lg">
+              <i class="bi bi-check-circle-fill me-2"></i>Guardar Servicio
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

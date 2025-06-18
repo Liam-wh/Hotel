@@ -9,7 +9,7 @@ class Servicio(db.Model):
     precio = db.Column(db.Float, nullable=False)
 
     # Opcional: relación con reservas si quieres registrar servicios usados en una reserva
-    reservas = db.relationship('ReservaServicio', back_populates='servicio', cascade='all, delete-orphan')
+    res_servicio = db.relationship('ReservaServicio', back_populates='servicio', cascade='all, delete-orphan')
 
     def __init__(self, nombre, descripcion, precio):
         self.nombre = nombre

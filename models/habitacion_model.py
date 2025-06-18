@@ -6,7 +6,7 @@ class Habitacion(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     numero = db.Column(db.String(10), nullable=False, unique=True)
     tipo = db.Column(db.String(50), nullable=False)  # Ej: "Simple", "Doble", "Suite"
-    precio = db.Column(db.Float, nullable=False)
+    precio = db.Column(db.Float(11,2), nullable=False)
     estado = db.Column(db.String(20), nullable=False, default='Disponible')  # Ej: Disponible, Ocupada, Mantenimiento
 
     reservas = db.relationship('Reserva', back_populates='habitacion')

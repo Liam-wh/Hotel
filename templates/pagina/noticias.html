@@ -1,32 +1,16 @@
 {% extends 'base.html' %}
 
-{% block title %} NOTICIAS | HOTEL {% endblock %}
+{% block title %}HOTEL | NOTICIAS{% endblock %}
 
 {% block content %}
-
-<style>
-    #card-mov::before {
-        content: "NEW";
-        position: absolute;
-        top: 10px;
-        left: -5px;
-        background: #ff4081;
-        color: white;
-        font-weight: bold;
-        padding: 5px 10px;
-        font-size: 0.75rem;
-        border-radius: 0 5px 5px 0;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    }
-</style>
 
 
 <div class="container py-5">
     <div class="row g-4">
         <!-- Tarjeta destacada -->
         <div class="col-12 col-lg-6">
-            <div class="card " id="card-mov">
-                <img src="static/images/vip.jpg" class="card-img-top" alt="Concierto en vivo">
+            <div class="card " id="card-new">
+                <img src="static/images/vip.jpg" class="card-img-top img-fluid" alt="Concierto en vivo">
                 <div class="card-body">
                     <h4 class="card-title">Concierto especial con orquesta invitada</h4>
                     <p class="">
@@ -95,117 +79,129 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 
-        <!-- Tarjetas breves -->
-        <div class="col-12 col-md-4 mt-5">
-            <div class="card h-100 shadow-lg border-0">
-                <img src="static/images/noticia1.jpg" class="card-img-top" alt="Mini noticia 1">
-                <div class="card-body">
-                    <h5 class="card-title"> Eventos privados</h5>
-                    <p class="">
-                        Nuestro centro de eventos ofrece salones versátiles para bodas, cumpleaños y reuniones
-                        corporativas. Contamos con equipos audiovisuales, banquetería personalizada y asistencia durante
-                        todo el evento.
-                    </p>
+        <div class="container mb-5">
+            <div class="row justify-content-center">
+                <!-- Tarjeta 1 -->
+                <div class="col-12 col-md-6 col-lg-4 mt-5">
+                    <div class="card h-100 shadow-lg border-0">
+                        <img src="static/images/noticia1.jpg" class="card-img-top img-fluid"
+                            style="height: 250px; object-fit: cover;" alt="Mini noticia 1">
+                        <div class="card-body">
+                            <h5 class="card-title">Eventos privados</h5>
+                            <p>
+                                Nuestro centro de eventos ofrece salones versátiles para bodas, cumpleaños y reuniones
+                                corporativas. Contamos con equipos audiovisuales, banquetería personalizada y asistencia
+                                durante todo el evento.
+                            </p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="col-12 col-md-4 mt-5">
-            <div class="card h-100 shadow-sm border-0">
-                <img src="static/images/noticia2.jpg" class="card-img-top" alt="Mini noticia 2">
-                <div class="card-body">
-                    <h5 class="card-title">Música en vivo</h5>
-                    <p class="">
-                        Todos los viernes y sábados, ven a disfrutar de música en vivo en nuestro bar con artistas
-                        locales de jazz, bossa nova y acústico. Ideal para cerrar la noche con una copa y buena
-                        compañía.
-                    </p>
+                <!-- Tarjeta 2 -->
+                <div class="col-12 col-md-6 col-lg-4 mt-5">
+                    <div class="card h-100 shadow-lg border-0">
+                        <img src="static/images/noticia2.jpg" class="card-img-top img-fluid"
+                            style="height: 250px; object-fit: cover;" alt="Mini noticia 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Música en vivo</h5>
+                            <p>
+                                Todos los viernes y sábados, ven a disfrutar de música en vivo en nuestro bar con
+                                artistas locales de jazz, bossa nova y acústica. Ideal para cerrar la noche con una copa
+                                y buena compañía.
+                            </p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="col-12 col-md-4 mt-5">
-            <div class="card h-100 shadow-lg border-0">
-                <img src="static/images/noticia3.png" class="card-img-top" alt="Mini noticia 3">
-                <div class="card-body">
-                    <h5 class="card-title">Tours personalizados</h5>
-                    <p class="">
-                        Ofrecemos paquetes turísticos guiados por la ciudad, visitas culturales, rutas de senderismo y
-                        tours gastronómicos. Perfecto para explorar durante tu estadía con la comodidad de regresar al
-                        hotel.
-                    </p>
+                <!-- Tarjeta 3 -->
+                <div class="col-12 col-md-6 col-lg-4 mt-5">
+                    <div class="card h-100 shadow-lg border-0">
+                        <img src="static/images/noticia3.png" class="card-img-top img-fluid"
+                            style="height: 250px; object-fit: cover;" alt="Mini noticia 3">
+                        <div class="card-body">
+                            <h5 class="card-title">Tours personalizados</h5>
+                            <p>
+                                ofrecemos paquetes turísticos guiados por la ciudad, visitas culturales, rutas de
+                                senderismo y tours gastronómicos. Perfecto para explorar durante tu estadía con la
+                                comodidad de regresar al hotel.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Modal Concierto -->
-<div class="modal fade" id="modalConcierto" tabindex="-1" aria-labelledby="modalConciertoLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <!-- Header -->
-            <div class="modal-header py-2">
-                <h5 class="modal-title d-flex align-items-center gap-2" id="modalConciertoLabel">
-                    <i class="bi bi-music-note-beamed text-primary"></i> Concierto en Vivo
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-            </div>
+    <!-- Modal Concierto -->
+    <div class="modal fade" id="modalConcierto" tabindex="-1" aria-labelledby="modalConciertoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <!-- Header -->
+                <div class="modal-header py-2">
+                    <h5 class="modal-title d-flex align-items-center gap-2" id="modalConciertoLabel">
+                        <i class="bi bi-music-note-beamed text-primary"></i> Concierto en Vivo
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
 
-            <!-- Body -->
-            <div class="modal-body">
-                <div class="row g-4 align-items-center">
-                    <!-- Imagen principal -->
-                    <div class="col-12 col-md-6">
-                        <img src="static/images/noticiaVIP.jpg" class="img-fluid rounded shadow" alt="Orquesta en Vivo">
+                <!-- Body -->
+                <div class="modal-body">
+                    <div class="row g-4 align-items-center">
+                        <!-- Imagen principal -->
+                        <div class="col-12 col-md-6">
+                            <img src="static/images/noticiaVIP.jpg" class="img-fluid rounded shadow"
+                                alt="Orquesta en Vivo">
+                        </div>
+
+                        <!-- Texto e íconos -->
+                        <div class="col-12 col-md-6">
+                            <h4 class="fw-bold mb-3">Orquesta Sinfónica UNI</h4>
+                            <p>Este sábado 15 a las 20:00 h, disfruta una noche especial en nuestra terraza principal.
+                            </p>
+                            <ul class="list-unstyled">
+                                <li><i class="bi bi-stars text-warning me-2"></i> Repertorio clásico y contemporáneo
+                                </li>
+                                <li><i class="bi bi-cup-straw text-danger me-2"></i> Bebidas y aperitivos incluidos</li>
+                                <li><i class="bi bi-geo-alt-fill text-success me-2"></i> Terraza con vista panorámica
+                                </li>
+                                <li><i class="bi bi-ticket-perforated text-primary me-2"></i> Entrada gratuita para
+                                    huéspedes</li>
+                            </ul>
+                        </div>
                     </div>
 
-                    <!-- Texto e íconos -->
-                    <div class="col-12 col-md-6">
-                        <h4 class="fw-bold mb-3">Orquesta Sinfónica UNI</h4>
-                        <p>Este sábado 15 a las 20:00 h, disfruta una noche especial en nuestra terraza principal.</p>
-                        <ul class="list-unstyled">
-                            <li><i class="bi bi-stars text-warning me-2"></i> Repertorio clásico y contemporáneo</li>
-                            <li><i class="bi bi-cup-straw text-danger me-2"></i> Bebidas y aperitivos incluidos</li>
-                            <li><i class="bi bi-geo-alt-fill text-success me-2"></i> Terraza con vista panorámica</li>
-                            <li><i class="bi bi-ticket-perforated text-primary me-2"></i> Entrada gratuita para
-                                huéspedes</li>
-                        </ul>
+                    <!-- Galería adicional -->
+                    <div class="row mt-4 g-3">
+                        <div class="col-12 text-center mb-2">
+                            <h5 class="fw-semibold"><i class="bi bi-images me-2"></i> Momentos anteriores</h5>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <img src="static/images/uni_tres.jpg" class="img-fluid rounded" alt="Concierto 1">
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <img src="static/images/uni_dos.jpg" class="img-fluid rounded" alt="Concierto 2">
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <img src="static/images/uni_uno.jpg" class="img-fluid rounded" alt="Concierto 3">
+                        </div>
                     </div>
                 </div>
 
-                <!-- Galería adicional -->
-                <div class="row mt-4 g-3">
-                    <div class="col-12 text-center mb-2">
-                        <h5 class="fw-semibold"><i class="bi bi-images me-2"></i> Momentos anteriores</h5>
-                    </div>
-                    <div class="col-6 col-md-4">
-                        <img src="static/images/uni_tres.jpg" class="img-fluid rounded" alt="Concierto 1">
-                    </div>
-                    <div class="col-6 col-md-4">
-                        <img src="static/images/uni_dos.jpg" class="img-fluid rounded" alt="Concierto 2">
-                    </div>
-                    <div class="col-6 col-md-4">
-                        <img src="static/images/uni_uno.jpg" class="img-fluid rounded" alt="Concierto 3">
-                    </div>
+                <!-- Footer -->
+                <div class="modal-footer justify-content-between py-2">
+                    <small class="text-muted"><i class="bi bi-info-circle me-1"></i>Todo esto podrás disfrutar durante
+                        tu
+                        estadía en nuestro hotel.</small>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        Cerrar
+                    </button>
                 </div>
-            </div>
-
-            <!-- Footer -->
-            <div class="modal-footer justify-content-between py-2">
-                <small class="text-muted"><i class="bi bi-info-circle me-1"></i>Todo esto podrás disfrutar durante tu
-                    estadía en nuestro hotel.</small>
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                    Cerrar
-                </button>
             </div>
         </div>
     </div>
+
 </div>
-
-
 {% endblock %}

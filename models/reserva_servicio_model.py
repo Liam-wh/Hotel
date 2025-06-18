@@ -7,6 +7,11 @@ class ReservaServicio(db.Model):
     reserva_id = db.Column(db.Integer, db.ForeignKey('reservas.id'), nullable=False)
     servicio_id = db.Column(db.Integer, db.ForeignKey('servicios.id'), nullable=False)
     cantidad = db.Column(db.Integer, nullable=False, default=1)
+    
+    # Dentro de la clase ReservaServicio
+    reserva = db.relationship('Reserva', back_populates='res_servicios')
+    servicio = db.relationship('Servicio', back_populates='res_servicio')
+
 
     def __init__(self, reserva_id, servicio_id, cantidad=1):
         self.reserva_id = reserva_id
