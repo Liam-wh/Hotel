@@ -194,6 +194,7 @@ def reporte_pdf():
         'margin-left': '0mm',
         'margin-right': '0mm',
         'encoding': "UTF-8",
+        'no-images': '',
         'no-outline': None,
     }
 

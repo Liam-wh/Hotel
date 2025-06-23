@@ -96,6 +96,7 @@ def reporte_pdf():
     'margin-right': '0mm',
     'encoding': "UTF-8",
     'no-outline': None,
+    'no-images': '',
     'print-media-type': '',  # Muy importante para que se vean backgrounds
     }
 

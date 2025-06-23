@@ -196,8 +196,7 @@ def generar_pdf(id):
         total_servicios=total_servicios,
         subtotal=subtotal,              # <-- PASADO A LA PLANTILLA
         impuesto=impuesto,              # <-- PASADO A LA PLANTILLA
-        total_final=total_final,        # <-- PASADO A LA PLANTILLA
-        modelo_url=modelo_url
+        total_final=total_final        # <-- PASADO A LA PLANTILLA
     )
 
     pdf = pdfkit.from_string(html, False, options={
