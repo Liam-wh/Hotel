@@ -5,27 +5,13 @@
 {% block content %}
 
 
-<div class="container-fluid mb-2">
-    <div class="container mt-4">
-        <div class="card border-0 text-white">
-            <!-- Imagen de fondo -->
-            <img src="{{ url_for('static', filename='images/welcome.jpg') }}" id="img-welcome" alt="...">
-
-            <!-- Capa oscura -->
-            <div class="img-dark-overlay "></div>
-
-            <!-- Contenido -->
-            <div class="card-img-overlay d-flex align-items-center justify-content-end text-end  mt-4">
-                <div class="text-container">
-                    <h3 class="card-title fw-bold typewriter">Bienvenido al Hotel Paraíso</h3>
-                    <p class="mb-1">Vive el descanso perfecto en cualquier temporada.</p>
-                    <p class="mb-1">Naturaleza, comodidad y atención única...</p>
-                    <p class="mb-1">¡Todo en un solo lugar!</p>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="d-flex justify-content-center align-items-center pt-4 w-100">
+  <img src="{{ url_for('static', filename='images/bienvenida.gif') }}" 
+       alt="En desarrollo"
+       class="img-fluid rounded-3" 
+       style="max-width: 97%;">
 </div>
+
 
 <div class="container mt-5 mb-5">
     <div class="row g-4">

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Reporte de Habitaciones</title>
+  <style>
+    @page {
+      size: Legal;
+      margin: 0;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      font-family: 'Roboto', sans-serif;
+      color: #2c3e50;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      background: transparent;
+      position: relative;
+    }
+
+    .background {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url("{{ modelo_url }}");
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
+      z-index: -1;
+      opacity: 1;
+    }
+
+    .content {
+      position: relative;
+      padding: 140px 60px 100px 60px;
+      box-sizing: border-box;
+    }
+
+    h2 {
+      text-align: center;
+      color: rgb(250, 0, 64);
+      font-weight: 700;
+      font-size: 28px;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 1px white;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 16px;
+    }
+
+    .spec-table {
+      margin-bottom: 40px;
+      background-color: rgba(255, 255, 255, 0.94);
+      font-size: 13px;
+    }
+
+    .main-table {
+      background-color: rgba(255, 255, 255, 0.94);
+      border-radius: 15px;
+    }
+
+    th, td {
+      border: 1px solid #ffffff;
+      padding: 10px 12px;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 16px;
+      border-radius: 12px;
+    }
+
+    thead th {
+      background-color: rgb(12, 30, 45);
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .spec-heading {
+      background-color: rgb(250, 0, 64);
+      color: white;
+      padding: 10px;
+      text-align: center;
+      font-size: 17px;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="background"></div>
+
+  <div class="content">
+    <h2>REPORTE DE HABITACIONES</h2>
+
+    <!-- Tabla de especificaciones -->
+    <table class="spec-table">
+      <tr>
+        <td colspan="3" class="spec-heading">ESPECIFICACIONES DE LAS HABITACIONES</td>
+      </tr>
+      <tr>
+        <th>P, D, F, S</th>
+        <th>3, 4, 5, 0</th>
+        <th>01</th>
+      </tr>
+      <tr>
+        <td>tipo de habitación</td>
+        <td>Pisos</td>
+        <td>número de habitación</td>
+      </tr>
+      <tr>
+        <td>personal - individual</td>
+        <td>3 → tercer piso</td>
+        <td rowspan="4" style="vertical-align: middle;">...</td>
+      </tr>
+      <tr>
+        <td>doble</td>
+        <td>4 → cuarto piso</td>
+      </tr>
+      <tr>
+        <td>familiar</td>
+        <td>5 → quinto piso</td>
+      </tr>
+      <tr>
+        <td>suite</td>
+        <td>0 → último piso</td>
+      </tr>
+    </table>
+
+    <!-- Tabla principal -->
+    <table class="main-table">
+      <thead>
+        <tr>
+          <th>N°</th>
+          <th>Número</th>
+          <th>Tipo</th>
+          <th>Precio (Bs)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for habitacion in habitaciones %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ habitacion.numero }}</td>
+          <td>{{ habitacion.tipo }}</td>
+          <td>{{ '%.2f' | format(habitacion.precio) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</body>
+
+</html>

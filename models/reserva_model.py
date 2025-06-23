@@ -71,7 +71,7 @@ class Reserva(db.Model):
             if reserva.fecha_entrada == hoy and reserva.estado == 'RESERVADA':
                 reserva.estado = 'ACTIVA'
                 habitacion = Habitacion.get_by_id(reserva.habitacion_id)
-                habitacion.estado = 'Ocupada'
+                habitacion.estado = 'Ocupado'
                 habitacion.save()
                 reserva.save()
             elif reserva.fecha_salida == hoy and reserva.estado in ['RESERVADA', 'ACTIVA']:

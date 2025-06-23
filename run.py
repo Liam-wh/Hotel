@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from database import db
 from controllers import cliente_controller, usuario_controller, habitacion_controller,servicio_controller, reserva_controller, reserva_servicio_controller
-from flask_login import LoginManager
+from flask_login import LoginManager,login_required,current_user
 from models.cliente_model import Cliente
 from models.usuario_model import Usuario
 from models.reserva_model import Reserva
@@ -14,6 +14,14 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///hotel.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
+
+# Blueprints
+app.register_blueprint(cliente_controller.cliente_bp)
+app.register_blueprint(usuario_controller.usuario_bp)
+app.register_blueprint(habitacion_controller.habitacion_bp)
+app.register_blueprint(servicio_controller.servicio_bp)
+app.register_blueprint(reserva_controller.reserva_bp)
+app.register_blueprint(reserva_servicio_controller.reserva_servicio_bp)
 
 # Login Manager
 login_manager = LoginManager()
@@ -41,15 +49,14 @@ def inject_user_or_client():
             return dict(usuario=None, cliente=current_user)
     return dict(usuario=None, cliente=None)
 
+@app.route('/perfil')
+@login_required
+def perfil():
+    if hasattr(current_user, 'rol'):
+        return render_template('usuarios/perfil.html', usuario=current_user)
+    else:
+        return render_template('clientes/perfil.html', cliente=current_user)
 
-
-# Blueprints
-app.register_blueprint(cliente_controller.cliente_bp)
-app.register_blueprint(usuario_controller.usuario_bp)
-app.register_blueprint(habitacion_controller.habitacion_bp)
-app.register_blueprint(servicio_controller.servicio_bp)
-app.register_blueprint(reserva_controller.reserva_bp)
-app.register_blueprint(reserva_servicio_controller.reserva_servicio_bp)
 
 # Context processor para navbar activo
 @app.context_processor

@@ -1,0 +1,142 @@
+{% extends 'sistema.html' %}
+{% block title %}Perfil de Usuario{% endblock %}
+
+{% block content %}
+<div class="container my-5 d-flex justify-content-center">
+    <div class="card shadow-lg border-0 rounded-4" style="max-width: 480px; width: 100%;">
+        <div class="card-body p-4">
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show shadow-sm rounded-3" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <h4 class="fw-bold mb-4 text-center fs-4 fs-md-3">Mi Perfil</h4>
+
+            <!-- FORMULARIO DE ACTUALIZACIÓN -->
+            <form action="{{ url_for('usuario.actualizar_perfil') }}" method="POST">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="nombre" name="nombre"
+                        value="{{ usuario.nombre }}" required>
+                    <label for="nombre">Nombre</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="username" name="username"
+                        value="{{ usuario.username }}" required>
+                    <label for="username">Username</label>
+                </div>
+
+                <div class="form-floating mb-4">
+                    <input type="text" class="form-control" id="rol" value="{{ usuario.rol | capitalize }}" disabled>
+                    <label for="rol">Rol</label>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-success fs-6 fs-md-5">Guardar cambios</button>
+                </div>
+            </form>
+
+            <!-- BOTONES DE CONTRASEÑA -->
+            <div class="d-flex flex-column gap-3 mt-4">
+                <button class="btn btn-outline-primary shadow-sm fs-6 fs-md-5" data-bs-toggle="modal"
+                    data-bs-target="#modalCambiarPassword">
+                    <i class="bi bi-key me-2"></i> Cambiar Contraseña
+                </button>
+                <button class="btn btn-outline-warning shadow-sm fs-6 fs-md-5" data-bs-toggle="modal"
+                    data-bs-target="#modalRestablecerPassword">
+                    <i class="bi bi-arrow-clockwise me-2"></i> Restablecer Contraseña
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Cambiar contraseña -->
+<div class="modal fade" id="modalCambiarPassword" tabindex="-1" aria-labelledby="modalCambiarPasswordLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow rounded-4">
+            <div class="modal-header bg-light text-dark rounded-top-4">
+                <h5 class="modal-title" id="modalCambiarPasswordLabel">Cambiar Contraseña</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <form action="{{ url_for('usuario.cambiar_password') }}" method="POST" novalidate>
+                <div class="modal-body">
+                    <p class="mb-4">¿Estás seguro que deseas cambiar tu contraseña?</p>
+                    <div class="form-floating mb-3">
+                        <input type="password" name="actual" class="form-control" id="actual" required>
+                        <label for="actual">Contraseña Actual</label>
+                        <div class="invalid-feedback">Por favor ingresa tu contraseña actual.</div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" name="nueva1" class="form-control" id="nueva1" required>
+                        <label for="nueva1">Nueva Contraseña</label>
+                        <div class="invalid-feedback">Por favor ingresa una nueva contraseña.</div>
+                    </div>
+                    <div class="form-floating">
+                        <input type="password" name="nueva2" class="form-control" id="nueva2" required>
+                        <label for="nueva2">Repetir Nueva Contraseña</label>
+                        <div class="invalid-feedback">Por favor repite la nueva contraseña.</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary fw-semibold px-4">Actualizar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Restablecer contraseña -->
+<div class="modal fade" id="modalRestablecerPassword" tabindex="-1" aria-labelledby="modalRestablecerPasswordLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow rounded-4">
+            <div class="modal-header bg-warning text-dark rounded-top-4">
+                <h5 class="modal-title" id="modalRestablecerPasswordLabel">Restablecer Contraseña</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <form action="{{ url_for('usuario.restablecer_password') }}" method="POST">
+                <div class="modal-body">
+                    <p class="mb-0">¿Estás seguro que deseas restablecer tu contraseña?</p>
+                    <small class="text-muted">Se te asignará una nueva contraseña aleatoria y se mostrará una
+                        vez.</small>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-warning fw-semibold px-4">Restablecer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% set categories = messages | map(attribute=0) | list %}
+<div id="flash-categories" data-categories='{{ categories | tojson | safe }}'></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const data = document.getElementById('flash-categories');
+        if (data) {
+            const categories = JSON.parse(data.dataset.categories);
+            if (categories.includes('cambiar_error')) {
+                new bootstrap.Modal(document.getElementById('modalCambiarPassword')).show();
+            }
+            if (categories.includes('restablecer_error')) {
+                new bootstrap.Modal(document.getElementById('modalRestablecerPassword')).show();
+            }
+        }
+    });
+</script>
+{% endif %}
+{% endwith %}
+{% endblock %}

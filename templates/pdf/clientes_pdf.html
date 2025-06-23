@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Reporte de Clientes</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            width: 100%;
+            color: #2c3e50;
+            background-image: url("{{ modelo_url }}");
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+
+        body {
+            padding: 140px 60px 100px 60px;
+            background-color: rgba(255, 255, 255, 0.88);
+            min-height: 100vh;
+            box-sizing: border-box;
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h2 {
+            text-align: center;
+            color: rgb(250, 0, 64);
+            font-weight: 700;
+            font-size: 30px;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 1px white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 16px;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: rgba(255, 255, 255, 0.94);
+        }
+
+        th, td {
+            border: 2px solid #ffffff;
+            padding: 12px 14px;
+            text-align: center;
+            vertical-align: top;
+            border-radius: 13px;
+        }
+
+        thead th {
+            background-color: rgb(12, 30, 45);
+            color: white;
+            font-weight: bold;
+            font-size: 17px;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>REPORTE DE CLIENTES</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Documento</th>
+                <th>Correo</th>
+                <th>Teléfono</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cliente in clientes %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ cliente.nombre }}</td>
+                <td>{{ cliente.documento }}</td>
+                <td>{{ cliente.correo }}</td>
+                <td>{{ cliente.telefono or '—' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Factura de Reserva</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      font-family: 'Roboto', sans-serif;
+      box-sizing: border-box;
+    }
+
+    html {
+      background-image: url("{{ modelo_url }}");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      background-color: transparent;
+      margin: 0;
+      padding: 110px 80px 110px 80px;
+      font-size: 16px;
+      color: #2c3e50;
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    h2 {
+      text-align: center;
+      color: rgb(250, 0, 64);
+      font-weight: 700;
+      margin-top: 0;
+      font-size: 28px;
+    }
+
+    h3 {
+      font-size: 22px;
+      color: rgb(250, 0, 64);
+      margin-bottom: 10px;
+    }
+
+    h4 {
+      font-size: 18px;
+    }
+
+    .center-text {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 17px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 16px;
+    }
+
+    th,
+    td {
+      border: 4px solid white;
+      padding: 10px 14px;
+      text-align: center;
+    }
+
+    thead th {
+      font-size: 17px;
+      border-radius: 15px;
+    }
+
+    .cliente-table th {
+      background-color: rgb(250, 0, 64);
+      color: white;
+      border-radius: 19px 0 0 0;
+    }
+
+    .cliente-table td {
+      background-color: rgb(254, 218, 224);
+      border-radius: 15px ;
+    }
+
+    .detalle-table th {
+      background-color: rgb(12, 30, 45);
+      color: white;
+      border-radius: 19px 0 0 0;
+    }
+
+    .detalle-table td {
+      background-color: rgb(229, 239, 248);
+      border-radius: 15px;
+    }
+
+
+
+    .fechas-table th.fecha-celda {
+      background-color: rgb(229, 239, 248);
+      font-weight: bold;
+      border: none;
+      border-radius: 19px 0 0 0;
+    }
+
+
+    .totales {
+      width: 320px;
+      float: right;
+      margin-top: 20px;
+      font-size: 16px;
+    }
+
+    .totales td {
+      padding: 10px 12px;
+      text-align: right;
+    }
+
+    .totales .total-label {
+      background-color: rgb(250, 0, 64);
+      color: white;
+      font-weight: bold;
+      font-size: 17px;
+      border-radius: 19px 0 0 0;
+    }
+
+    .totales .total-value {
+      background-color: rgb(12, 30, 45);
+      color: white;
+      font-weight: bold;
+      font-size: 17px;
+      border-radius: 0 0 19px 0;
+    }
+
+    .politica {
+      width: 420px;
+      float: left;
+      margin-top: 60px;
+      font-size: 15px;
+    }
+
+    .politica h4 {
+      background-color: rgb(250, 0, 64);
+      color: white;
+      padding: 10px 14px;
+      margin: 0;
+    }
+
+    .politica p {
+      background-color: rgb(254, 218, 224);
+      padding: 12px 14px;
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>FACTURA DE RESERVA</h2>
+
+  <p class="center-text"><strong>NÚMERO DE FACTURA:</strong> {{ "%04d" % reserva.id }}</p>
+
+  <!-- Fechas -->
+  <table class="fechas-table">
+    <tbody>
+      <tr>
+        <th class="fecha-celda">FECHA DE ENTRADA</th>
+        <td >{{ reserva.fecha_entrada.strftime('%d-%m-%Y') }}</td>
+        <th class="fecha-celda">FECHA DE SALIDA</th>
+        <td>{{ reserva.fecha_salida.strftime('%d-%m-%Y') }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <!-- Cliente -->
+  <div style="margin-top: 30px;">
+    <h3>Datos del Cliente</h3>
+    <table class="cliente-table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Documento</th>
+          <th>Celular</th>
+          <th>Correo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ reserva.cliente.nombre }}</td>
+          <td>{{ reserva.cliente.documento }}</td>
+          <td>{{ reserva.cliente.telefono }}</td>
+          <td>{{ reserva.cliente.correo }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Detalles de reserva -->
+  <div style="margin-top: 30px;">
+    <h3 style="color: rgb(12, 30, 45)">Detalles de Reserva</h3>
+
+    {% set dias = (reserva.fecha_salida - reserva.fecha_entrada).days %}
+
+    <table class="detalle-table">
+      <thead>
+        <tr>
+          <th>Cantidad</th>
+          <th>Descripción</th>
+          <th>Precio Unitario (Bs)</th>
+          <th>Precio Total (Bs)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ dias }} días</td>
+          <td>{{ reserva.habitacion.numero }} - {{ reserva.habitacion.tipo }}</td>
+          <td>{{ '%.2f' % reserva.habitacion.precio }}</td>
+          <td>{{ '%.2f' % (reserva.habitacion.precio * dias) }}</td>
+        </tr>
+        {% for item in servicios %}
+        <tr>
+          <td>{{ item.cantidad }}</td>
+          <td>{{ item.servicio.nombre }}</td>
+          <td>{{ '%.2f' % item.servicio.precio }}</td>
+          <td>{{ '%.2f' % (item.servicio.precio * item.cantidad) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- Política y totales -->
+  <div>
+    <div class="politica">
+      <h4>Política de Cancelación</h4>
+      <p>
+        Las cancelaciones con al menos 48 horas de anticipación no tienen cargo.
+        Cancelaciones dentro de las 24 horas previas al check-in o no presentarse generan el cobro total de la reserva.
+        Los cambios de fecha están sujetos a disponibilidad.
+      </p>
+    </div>
+
+    <table class="totales">
+      <tr>
+        <td>Subtotal</td>
+        <td>{{ '%.2f' % subtotal }} Bs</td>
+      </tr>
+      <tr>
+        <td>Descuento</td>
+        <td>0.00 Bs</td>
+      </tr>
+      <tr>
+        <td>Impuestos (IVA 13%)</td>
+        <td>{{ '%.2f' % impuesto }} Bs</td>
+      </tr>
+      <tr>
+        <td class="total-label">TOTAL A PAGAR</td>
+        <td class="total-value">{{ '%.2f' % total_final }} Bs</td>
+      </tr>
+    </table>
+  </div>
+
+</body>
+
+</html>

@@ -3,14 +3,23 @@
 {% block title %}SISTEMA | NUEVA RESERVA{% endblock %}
 
 {% block content %}
+
+<!-- FullCalendar CSS y JS -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+
+
 <div class="container mt-3 bg-light rounded shadow-sm mb-5 py-3 px-5">
   <h3 class="fw-bold text-center ">NUEVA RESERVA</h3>
   <form action="{{ url_for('reserva.create') }}" method="POST">
 
     {% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
+    {% if messages %}
     {% for category, message in messages %}
-    <div class="alert alert-{{ category }} alert-dismissible fade show shadow-sm rounded border-0 px-4 py-3 mt-3 animate__animated animate__fadeInDown" role="alert">
+    <div
+      class="alert alert-{{ category }} alert-dismissible fade show shadow-sm rounded border-0 px-4 py-3 mt-3 animate__animated animate__fadeInDown"
+      role="alert">
       <div class="d-flex align-items-center">
         <i class="bi 
           {% if category == 'success' %}bi-check-circle-fill text-success
@@ -24,23 +33,44 @@
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
     </div>
     {% endfor %}
-  {% endif %}
-{% endwith %}
-    
+    {% endif %}
+    {% endwith %}
+
+    <!-- HABITACIÓN (AHORA VA PRIMERO) -->
+    <div class="mb-4">
+      <label for="habitacion" class="form-label">Habitación</label>
+      <div class="input-group">
+        <span class="input-group-text"><i class="bi bi-door-closed-fill"></i></span>
+        <select class="form-select" id="habitacion" name="habitacion_id" required>
+          <option value="" selected disabled>Seleccione una habitación</option>
+          {% for habitacion in habitaciones %}
+          <option value="{{ habitacion.id }}" data-precio="{{ habitacion.precio }}">
+            {{ habitacion.numero }} - {{ habitacion.tipo }}
+          </option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <!-- Calendario -->
+    <div id="calendario" class="mb-2 p-1 border-0 rounded  table-responsive"
+      style="background-color: transparent; display: none;"></div>
+
+
     <!-- Fechas -->
     <div class="row mb-4">
       <div class="col-md-6">
         <label for="fecha_entrada" class="form-label mt-4">Fecha de Entrada</label>
         <div class="input-group">
           <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-          <input type="date" class="form-control" name="fecha_entrada" required>
+          <input type="date" class="form-control" name="fecha_entrada" id="fecha_entrada" required disabled>
         </div>
       </div>
       <div class="col-md-6">
         <label for="fecha_salida" class="form-label mt-4">Fecha de Salida</label>
         <div class="input-group">
           <span class="input-group-text"><i class="bi bi-calendar-check"></i></span>
-          <input type="date" class="form-control" name="fecha_salida" required>
+          <input type="date" class="form-control" name="fecha_salida" id="fecha_salida" required disabled>
         </div>
       </div>
     </div>
@@ -50,28 +80,31 @@
       <label for="cliente" class="form-label">Cliente</label>
       <div class="input-group">
         <span class="input-group-text"><i class="bi bi-person-circle"></i></span>
-        <select class="form-select" name="cliente_id" required>
-          <option value="" selected disabled>Seleccione un cliente</option>
-          {% for cliente in clientes %}
-          <option value="{{ cliente.id }}">{{ cliente.nombre }}</option>
+        {% if cliente %}
+        <!-- Mostrar solo el nombre si es cliente logueado -->
+        <input type="text" class="form-control" value="{{ cliente.nombre }}" readonly>
+        <input type="hidden" name="cliente_id" value="{{ cliente.id }}">
+        {% else %}
+        <select class="form-select" name="cliente_id" id="cliente" required {% if cliente %} disabled {% endif %}>
+          <option value="" disabled {% if not cliente %} selected {% endif %}>Seleccione un cliente</option>
+          {% for c in clientes %}
+          <option value="{{ c.id }}" {% if cliente and cliente.id==c.id %} selected {% endif %}>
+            {{ c.nombre }}
+          </option>
           {% endfor %}
         </select>
+        {% endif %}
       </div>
     </div>
 
-    <!-- Habitación -->
-    <div class="mb-4">
-      <label for="habitacion" class="form-label">Habitación</label>
-      <div class="input-group">
-        <span class="input-group-text"><i class="bi bi-door-closed-fill"></i></span>
-        <select class="form-select" id="habitacion" name="habitacion_id" required onchange="actualizarPrecio()">
-          <option value="" selected disabled>Seleccione una habitación</option>
-          {% for habitacion in habitaciones %}
-          <option value="{{ habitacion.id }}" data-precio="{{ habitacion.precio }}">{{ habitacion.numero }} - {{ habitacion.tipo }}</option>
-          {% endfor %}
-        </select>
-      </div>
-    </div>
+
+
+    <!-- Campo oculto para enviar el cliente_id si está logueado como cliente -->
+    {% if cliente %}
+    <input type="hidden" name="cliente_id" value="{{ cliente.id }}">
+    {% endif %}
+
+
 
     <!-- Total -->
     <div class="row mb-4">
@@ -83,44 +116,178 @@
         </div>
       </div>
       <div class="col-md-6 d-flex align-items-end">
-        <button type="submit" class="btn btn-success w-100 py-2 mt-4">
+        <button type="submit" id="btn-reservar" class="btn btn-success w-100 py-2 mt-4" disabled>
           <i class="bi bi-check-circle-fill me-2"></i>Confirmar Reserva
         </button>
       </div>
     </div>
 
     <!-- Usuario oculto -->
+    {% if cliente %}
+    <input type="hidden" name="usuario" value="5">
+    {% elif usuario %}
     <input type="hidden" name="usuario" value="{{ usuario.id }}">
+    {% else %}
+    <input type="hidden" name="usuario" value="0"> {# o algún valor por defecto #}
+    {% endif %}
+
+
+
   </form>
 </div>
 
-<!-- Script de cálculo -->
-<script>
-function actualizarPrecio() {
-  const entrada = document.querySelector('[name="fecha_entrada"]').value;
-  const salida = document.querySelector('[name="fecha_salida"]').value;
-  const selectHabitacion = document.getElementById("habitacion");
-  const precio = selectHabitacion.options[selectHabitacion.selectedIndex]?.dataset?.precio;
-  const totalInput = document.getElementById("total");
 
-  if (entrada && salida && precio) {
-    const dias = (new Date(salida) - new Date(entrada)) / (1000 * 60 * 60 * 24);
-    if (dias > 0) {
-      totalInput.value = (dias * parseFloat(precio)).toFixed(2);
+
+<!-- Fechas ocupadas -->
+<script type="application/json" id="fechas-data">
+  {{ fechas_ocupadas | tojson }}
+</script>
+
+
+<script>
+  let calendar = null; // variable global
+
+  function actualizarPrecio() {
+    const entrada = document.getElementById("fecha_entrada").value;
+    const salida = document.getElementById("fecha_salida").value;
+    const selectHabitacion = document.getElementById("habitacion");
+    const precio = selectHabitacion.options[selectHabitacion.selectedIndex]?.dataset?.precio;
+    const totalInput = document.getElementById("total");
+
+    if (entrada && salida && precio) {
+      const dias = (new Date(salida) - new Date(entrada)) / (1000 * 60 * 60 * 24);
+      if (dias > 0) {
+        totalInput.value = (dias * parseFloat(precio)).toFixed(2);
+      } else {
+        totalInput.value = "";
+      }
     } else {
       totalInput.value = "";
     }
-  } else {
-    totalInput.value = "";
   }
-}
 
-// Asegúrate de recalcular siempre que cambien los datos
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelector('[name="fecha_entrada"]').addEventListener("change", actualizarPrecio);
-  document.querySelector('[name="fecha_salida"]').addEventListener("change", actualizarPrecio);
-  document.getElementById("habitacion").addEventListener("change", actualizarPrecio);
-});
+  function mostrarCalendarioHabitacion() {
+    const select = document.getElementById("habitacion");
+    const habitacionId = select.value;
+    const calendarioDiv = document.getElementById("calendario");
+
+    calendarioDiv.innerHTML = '';
+    calendarioDiv.style.display = 'block';
+
+    // Habilitar campos
+    document.getElementById("fecha_entrada").disabled = false;
+    document.getElementById("fecha_salida").disabled = false;
+    const clienteSelect = document.getElementById("cliente");
+    if (clienteSelect) {
+      clienteSelect.disabled = false;
+    }
+    document.getElementById("btn-reservar").disabled = false;
+
+    const fechasData = document.getElementById("fechas-data");
+    if (!fechasData) {
+      calendarioDiv.innerHTML = '<p class="text-danger">No se encontraron datos de fechas.</p>';
+      return;
+    }
+
+    const fechasJson = fechasData.textContent;
+    const fechasOcupadas = JSON.parse(fechasJson);
+    const todasReservas = fechasOcupadas[habitacionId];
+
+    if (!todasReservas || todasReservas.length === 0) {
+      calendarioDiv.innerHTML = '<p class="text-muted">No hay reservas registradas para esta habitación.</p>';
+      return;
+    }
+
+    const reservas = todasReservas.filter(reserva =>
+      reserva.estado === "ACTIVA" || reserva.estado === "RESERVADA"
+    );
+
+    if (reservas.length === 0) {
+      calendarioDiv.innerHTML = '<p class="text-muted">No hay reservas activas o reservadas para esta habitación.</p>';
+      return;
+    }
+
+    let html = `
+  <div class="table-responsive rounded shadow-sm">
+    <table class="table table-hover align-middle text-center mb-0" style="font-size: 0.9rem;">
+      <thead class="table-light text-dark fw-semibold text-uppercase">
+        <tr>
+          <th>N°</th>
+          <th>Fecha Inicio</th>
+          <th>Fecha Fin</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>`;
+
+    reservas.forEach((reserva, index) => {
+      html += `
+    <tr class="text-nowrap">
+      <td>${index + 1}</td>
+      
+      <td>${reserva.inicio}</td>
+      <td>${reserva.fin}</td>
+      <td>
+        <span class="badge d-inline-block w-100 py-2 rounded text-white fw-semibold 
+          ${reserva.estado === 'ACTIVA' ? 'bg-success bg-gradient' : 'bg-primary text-dark bg-gradient'}">
+          ${reserva.estado}
+        </span>
+      </td>
+    </tr>`;
+    });
+
+    html += `
+      </tbody>
+    </table>
+  </div>`;
+
+    calendarioDiv.innerHTML = html;
+
+  }
+
+  // Eventos
+  document.getElementById("habitacion").addEventListener("change", () => {
+    mostrarCalendarioHabitacion();
+    actualizarPrecio();
+  });
+
+  // Calcular total al cambiar fechas
+  document.getElementById("fecha_entrada").addEventListener("change", actualizarPrecio);
+  document.getElementById("fecha_salida").addEventListener("change", actualizarPrecio);
+
+  // Verificar conflictos antes de enviar
+  document.querySelector("form").addEventListener("submit", function (e) {
+    const fechasJson = document.getElementById("fechas-data").textContent;
+    const fechasOcupadas = JSON.parse(fechasJson);
+
+    const habitacionId = document.getElementById("habitacion").value;
+    const reservas = fechasOcupadas[habitacionId] || [];
+
+    const entrada = new Date(document.getElementById("fecha_entrada").value);
+    const salida = new Date(document.getElementById("fecha_salida").value);
+
+    let conflicto = false;
+
+    for (let reserva of reservas) {
+      if (reserva.estado === "ACTIVA" || reserva.estado === "RESERVADA") {
+        const inicio = new Date(reserva.inicio);
+        const fin = new Date(reserva.fin);
+
+        if ((entrada >= inicio && entrada < fin) ||
+          (salida > inicio && salida <= fin) ||
+          (entrada <= inicio && salida >= fin)) {
+          conflicto = true;
+          break;
+        }
+      }
+    }
+
+    if (conflicto) {
+      e.preventDefault();
+      alert("⚠️ Habitación ocupada en esa fecha. Elija otra fecha u otra habitación.");
+    }
+  });
 </script>
+
 
 {% endblock %}

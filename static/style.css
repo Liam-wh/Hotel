@@ -3,31 +3,20 @@ html,
 body {
     height: 100%;
     margin: 0;
-    overflow: hidden;
-    /* Evita scroll del body */
+    overflow: hidden;/* Evita scroll del body */
 }
+
+
 
 #main-content {
     height: calc(100% - 0px);
-    /* Ajusta si tu footer mide 200px, por ejemplo */
-    overflow-y: auto;
-}
-
-html,
-body {
-    height: 100%;
-    margin: 0;
-}
-
-#main-content {
-    min-height: 100%;
     display: flex;
     flex-direction: column;
     overflow-y: auto; /* Permite scroll si el contenido es largo */
 }
 
-.container {
-    flex: 1; /* Ocupa todo el espacio disponible y empuja el footer al fondo */
+#contenido {
+     flex: 1; 
 }
 
 
@@ -126,11 +115,6 @@ body {
     .nav-link {
         padding: 5px 0;
     }
-}
-
-.custom-tooltip {
-    --bs-tooltip-bg: #f5f5dc;
-    --bs-tooltip-color: var(--bs-success);
 }
 
 .text-justify {
@@ -234,8 +218,7 @@ body {
     }
 
     .card-text,
-    .card-title,
-    .text-container p {
+    .card-title {
         font-size: 1.4rem;
     }
 
@@ -252,7 +235,7 @@ body {
     }
 
     .text-container p {
-        font-size: clamp(0.85rem, 2.5vw, 1rem);
+        font-size: clamp(0.75rem, 2.5vw, 1rem);
     }
 }
 

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Reporte Reservas {{ fecha_inicio }} - {{ fecha_fin }}</title>
+    <style>
+        * {
+            font-family: 'Roboto', sans-serif;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+            color: #333;
+            background-image: url('{{ modelo_url }}');
+            background-size: cover;
+            /* OCUPA TODO el fondo */
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .contenido {
+            padding: 85px 60px 80px 60px;
+            box-sizing: border-box;
+            height: 100%;
+            width: 100%;
+        }
+
+        h2,
+        h3 {
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+           color: rgb(250, 0, 64);
+            text-align: center;
+            font-size: 25px;
+            padding-bottom: 2px;
+        }
+
+        h3 {
+            text-align: center;
+            font-size: 15px;
+            border-bottom: 2px solid #ccc;
+            margin-top: 2px;
+            padding-bottom: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 15px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.95);
+            
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: center;
+            border-radius: 9px;
+        }
+
+        thead th {
+            background-color: rgb(12, 30, 45);
+            color: #fff;
+            font-weight: bold;
+            border-top: 1px solid #ffffff;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f3f3f3;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+
+
+        td:last-child,
+        th:last-child {
+            border-right: none;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="contenido">
+        <h2>Reporte de Reservas</h2>
+        <h3> Desde {{ fecha_inicio }} hasta {{ fecha_fin }}</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Habitación</th>
+                    <th>Fecha Entrada</th>
+                    <th>Fecha Salida</th>
+                    <th>Total (Bs)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in reservas %}
+                <tr>
+                    <td>{{ r.id }}</td>
+                    <td>{{ r.cliente.nombre }}</td>
+                    <td>{{ r.habitacion.numero }} - {{ r.habitacion.tipo }}</td>
+                    <td>{{ r.fecha_entrada }}</td>
+                    <td>{{ r.fecha_salida }}</td>
+                    <td>{{ r.total }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6">No hay reservas en ese rango.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

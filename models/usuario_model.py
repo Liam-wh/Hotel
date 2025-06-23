@@ -10,6 +10,7 @@ class Usuario(db.Model,UserMixin):
     username = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String, nullable=False)
     rol = db.Column(db.String(20), nullable=False)
+    
 
     def __init__(self, nombre, username, password, rol):
         self.nombre = nombre
@@ -23,6 +24,10 @@ class Usuario(db.Model,UserMixin):
     
     def verify_password(self, password):
         return check_password_hash(self.password, password)
+    
+    # Método para actualizar la contraseña correctamente
+    def set_password(self, new_password):
+        self.password = self.hash_password(new_password)
     
     def save(self):
         db.session.add(self)

@@ -3,11 +3,10 @@
 {% block title %} SISTEMA | USUARIOS {% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-4 mt-4">
-    <h3 class="fw-semibold text-dark">
-        Lista de Usuarios
-    </h3>
-    <a href="{{ url_for('usuario.create') }}" class="btn btn-success " data-bs-toggle="modal"
+<div
+    class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 mt-4 text-center text-md-start">
+    <h4 class="fw-bold text-dark mb-3 mb-md-0 fs-4 fs-md-3">Lista de Usuarios</h4>
+    <a href="{{ url_for('usuario.create') }}" class="btn btn-success px-3 py-1.5" data-bs-toggle="modal"
         data-bs-target="#registroUsuarioModal">
         <i class="bi bi-plus-circle me-1"></i> Nuevo Usuario
     </a>
@@ -35,50 +34,57 @@
 {% endwith %}
 
 
-<div class="table-responsive" style="overflow-x: auto;">
-    <table class="table table-hover align-middle shadow-sm rounded overflow-hidden">
-        <thead class="table-dark border-1">
+<div class="table-responsive rounded shadow-sm mb-5">
+    <table class="table table-hover align-middle text-center mb-0" style="font-size: 0.95rem;">
+        <thead class="table-light text-dark fw-semibold text-uppercase">
             <tr>
-                <th>ID</th>
+                <th>N°</th>
                 <th>Nombre</th>
                 <th>Username</th>
                 <th>Rol</th>
-                <th></th>
-
+                <th>Acciones</th>
             </tr>
         </thead>
-        <tbody class="border-1">
+        <tbody>
             {% for item in usuarios %}
             <tr>
-                <td>{{item.id}}</td>
-                <td>{{item.nombre}}</td>
-                <td>{{item.username}}</td>
-                <td>{{item.rol}}</td>
+                <td>{{ item.id }}</td>
+                <td>{{ item.nombre }}</td>
+                <td>{{ item.username }}</td>
+                <td>{{ item.rol }}</td>
 
-                <td class="text-center">
-                    <div class="d-flex flex-column flex-sm-row justify-content-center align-items-center gap-2">
-                        <button class="btn btn-warning btn-sm d-flex align-items-center" data-bs-toggle="modal"
+                <td>
+                    <div class="d-flex flex-row justify-content-center gap-3">
+                        {% if item.username == 'admin' %}
+                        <button class="btn btn-secondary btn-sm px-3" disabled>Editar</button>
+                        <button class="btn btn-secondary btn-sm" disabled>Eliminar</button>
+                        
+                        {% elif item.username == 'online' %}
+                        <button class="btn btn-secondary btn-sm px-3" disabled>Editar</button>
+                        <button class="btn btn-secondary btn-sm" disabled>Eliminar</button>
+                        {% else %}
+                        <button class="btn btn-outline-primary btn-sm px-3" data-bs-toggle="modal"
                             data-bs-target="#editarUsuarioModal{{ item.id }}">
-                            <i class="bi bi-pencil-square me-1"></i><span class="d-none d-md-inline">Editar</span>
+                            Editar
                         </button>
 
-                        <a href="{{ url_for('usuario.delete', id=item.id) }}"
-                            class="btn btn-danger btn-sm d-flex align-items-center" title="Eliminar"
+                        <a href="{{ url_for('usuario.delete', id=item.id) }}" class="btn btn-outline-danger btn-sm"
                             onclick="return confirm('¿Estás seguro de eliminar este usuario?');">
-                            <i class="bi bi-trash-fill me-1"></i>
-                            <span class="d-none d-md-inline">Eliminar</span>
+                            Eliminar
                         </a>
+                        {% endif %}
                     </div>
                 </td>
 
+
             </tr>
 
-            <!-- Modal único para este usuario -->
+            <!-- Modal Editar Usuario -->
             <div class="modal fade" id="editarUsuarioModal{{ item.id }}" tabindex="-1"
                 aria-labelledby="editarUsuarioModalLabel{{ item.id }}" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content shadow-lg">
-                        <div class="modal-header">
+                    <div class="modal-content border-0 shadow">
+                        <div class="modal-header bg-light">
                             <h5 class="modal-title" id="editarUsuarioModalLabel{{ item.id }}">Actualizar Usuario</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Cerrar"></button>
@@ -102,17 +108,15 @@
                                 <div class="form-floating mb-4">
                                     <select class="form-select" name="rol" required>
                                         <option value="administrador" {% if item.rol=='administrador' %}selected{% endif
-                                            %}>Administrador
-                                        </option>
+                                            %}>Administrador</option>
                                         <option value="recepcionista" {% if item.rol=='recepcionista' %}selected{% endif
-                                            %}>
-                                            Recepcionista</option>
+                                            %}>Recepcionista</option>
                                     </select>
                                     <label>Rol</label>
                                 </div>
                                 <div class="d-grid">
-                                    <button type="submit" class="btn btn-primary btn-lg">
-                                        <i class="bi bi-check-circle-fill me-2"></i>Actualizar Usuario
+                                    <button type="submit" class="btn btn-primary mt-3">
+                                        <i class="bi bi-check-circle-fill me-2"></i>Actualizar
                                     </button>
                                 </div>
                             </form>
@@ -120,30 +124,28 @@
                     </div>
                 </div>
             </div>
-
             {% endfor %}
         </tbody>
-
     </table>
 </div>
 
+{% if usuario and usuario.rol == 'administrador' %}
+<a href="{{ url_for('usuario.reporte_pdf') }}" target="_blank" class="btn btn-primary mb-3">
+    Ver Reporte PDF
+</a>
+{% endif %}
 
-
-
-<!-- Modal de Registro de Usuario -->
+<!-- Modal Registrar Usuario -->
 <div class="modal fade" id="registroUsuarioModal" tabindex="-1" aria-labelledby="registroUsuarioModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content shadow-lg">
-            <div class="modal-header">
-                <h5 class="modal-title" id="registroUsuarioModalLabel">
-                    Registro de Usuario
-                </h5>
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title" id="registroUsuarioModalLabel">Registro de Usuario</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
                 <form action="{{ url_for('usuario.create') }}" method="POST">
-
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required>
                         <label for="nombre">Nombre</label>
@@ -163,7 +165,7 @@
 
                     <div class="form-floating mb-4">
                         <select class="form-select" id="rol" name="rol" required>
-                            <option selected> Seleccione un rol </option>
+                            <option selected>Seleccione un rol</option>
                             <option value="administrador">Administrador</option>
                             <option value="recepcionista">Recepcionista</option>
                         </select>
@@ -171,18 +173,25 @@
                     </div>
 
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-success btn-lg">
-                            <i class="bi bi-check-circle-fill me-2"></i>Registrar Usuario
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-check-circle-fill me-2"></i>Registrar
                         </button>
                     </div>
-
                 </form>
             </div>
         </div>
     </div>
 </div>
 
-
-
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(function () {
+            document.querySelectorAll(".alert").forEach(function (alertEl) {
+                alertEl.classList.remove("show");
+                setTimeout(() => alertEl.remove(), 300);
+            });
+        }, 2000);
+    });
+</script>
 
 {% endblock %}

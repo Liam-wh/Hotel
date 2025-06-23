@@ -1,0 +1,73 @@
+{% extends 'sistema.html' %}
+
+{% block title %}Perfil del Cliente{% endblock %}
+
+{% block content %}
+<div class="container mt-4 d-flex justify-content-center">
+    <div class="row w-100" style="max-width: 800px;">
+
+        <!-- Mensajes Flash -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show shadow-sm rounded border-0 px-4 py-3 animate__animated animate__fadeInDown"
+            role="alert" style="font-size: 1rem;">
+            <div class="d-flex align-items-center">
+                <span>{{ message }}</span>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <h4 class="fw-bold mb-4 text-center">Mi Perfil</h4>
+
+        <div class="card shadow border-0 p-3 mb-5">
+            <div class="row g-0 align-items-center">
+
+                <!-- Imagen -->
+                <div class="col-12 col-lg-6 p-3 d-flex align-items-center justify-content-center order-1 order-lg-2">
+                    <img src="{{ url_for('static', filename='images/perfil.png') }}" alt="Imagen perfil"
+                        class="img-fluid w-100" style="max-width: 300px; height: auto; object-fit: contain;">
+                </div>
+
+                <!-- Formulario -->
+                <div class="col-12 col-lg-6 p-3 order-2 order-lg-1">
+                    <form action="{{ url_for('cliente.actualizar_perfil') }}" method="POST">
+                        <div id="nombre-container">
+                            <input type="text" id="nombre-input" name="nombre" value="{{ cliente.nombre }}" required
+                                placeholder=" ">
+                            <label id="nombre-label" for="nombre-input">Nombre</label>
+                        </div>
+
+                        <div id="documento-container">
+                            <input type="text" id="documento-input" name="documento" value="{{ cliente.documento }}"
+                                required placeholder=" ">
+                            <label id="documento-label" for="documento-input">Número de Documento</label>
+                        </div>
+
+                        <div id="correo-container">
+                            <input type="email" id="correo-input" name="correo" value="{{ cliente.correo }}" required
+                                placeholder=" ">
+                            <label id="correo-label" for="correo-input">Correo electrónico</label>
+                        </div>
+
+                        <div id="telefono-container">
+                            <input type="text" id="telefono-input" name="telefono" value="{{ cliente.telefono }}"
+                                required placeholder=" ">
+                            <label id="telefono-label" for="telefono-input">Teléfono</label>
+                        </div>
+
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

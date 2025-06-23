@@ -1,7 +1,8 @@
-from flask import request, redirect, url_for, Blueprint, flash, session
-from flask_login import login_user, logout_user, login_required
+from flask import request, redirect, url_for, Blueprint, flash, session, render_template, make_response
+from flask_login import login_user, logout_user, login_required, current_user
 from models.cliente_model import Cliente
 from views import cliente_view
+import pdfkit
 
 cliente_bp = Blueprint('cliente', __name__, url_prefix='/clientes')
 
@@ -123,3 +124,66 @@ def delete(id):
     else:
         flash('Cliente no encontrado.', 'danger')
     return redirect(url_for('cliente.index'))
+
+@cliente_bp.route('/perfil', methods=['GET', 'POST'])
+@login_required
+def actualizar_perfil():
+    if not hasattr(current_user, 'documento'):  # Asegura que sea cliente
+        flash('Acceso no autorizado.', 'danger')
+        return redirect(url_for('inicio'))
+
+    cliente = current_user
+
+    if request.method == 'POST':
+        cliente.nombre = request.form['nombre']
+        cliente.documento = request.form['documento']
+        cliente.correo = request.form['correo']
+        cliente.telefono = request.form['telefono']
+        cliente.save()
+        flash('Perfil actualizado correctamente.', 'success')
+        return redirect(url_for('cliente.actualizar_perfil'))
+
+    return render_template('clientes/perfil.html', cliente=cliente)
+
+
+@cliente_bp.route('/buscar', methods=['GET'])
+@login_required
+def buscar_documento():
+    documento = request.args.get('documento')
+    cliente = Cliente.query.filter_by(documento=documento).first()
+    if cliente:
+        return render_template('clientes/index.html', clientes=[cliente])  # lista con un solo cliente
+    else:
+        flash('Cliente no encontrado.', 'warning')
+        return redirect(url_for('cliente.index'))
+
+
+
+@cliente_bp.route('/reporte/pdf')
+@login_required
+def reporte_pdf():
+    clientes = Cliente.get_all()
+    modelo_url = request.host_url.rstrip('/') + url_for('static', filename='images/modelo_pdf.jpg')
+
+    html = render_template('pdf/clientes_pdf.html', clientes=clientes, modelo_url=modelo_url)
+
+    options = {
+        'enable-local-file-access': '',
+        'page-size': 'Letter',
+        'encoding': "UTF-8",
+        'margin-top': '0mm',
+        'margin-bottom': '0mm',
+        'margin-left': '0mm',
+        'margin-right': '0mm',
+        'no-outline': None
+    }
+
+    pdf = pdfkit.from_string(html, False, options=options)
+
+    response = make_response(pdf)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = 'inline; filename=reporte_clientes.pdf'
+
+    return response
+
+

@@ -1,7 +1,8 @@
-from flask import request, redirect, url_for, Blueprint, flash
+from flask import request, redirect, url_for, Blueprint, flash, make_response, render_template
 from models.habitacion_model import Habitacion
 from views import habitacion_view
 from flask_login import login_required
+import pdfkit
 
 
 habitacion_bp = Blueprint('habitacion', __name__, url_prefix='/habitaciones')
@@ -74,3 +75,36 @@ def delete(id):
     else:
         flash('Habitación no encontrada.', 'error')
     return redirect(url_for('habitacion.index'))
+
+
+
+@habitacion_bp.route('/reporte/pdf')
+@login_required
+def reporte_pdf():
+    habitaciones = Habitacion.get_all()
+    modelo_url = request.host_url.rstrip('/') + url_for('static', filename='images/modelo_red.jpg')
+    
+
+    html = render_template('pdf/habitaciones_pdf.html', habitaciones=habitaciones, modelo_url=modelo_url)
+
+    options = {
+    'enable-local-file-access': '',
+    'page-size': 'Legal',
+    'margin-top': '0mm',
+    'margin-bottom': '0mm',
+    'margin-left': '0mm',
+    'margin-right': '0mm',
+    'encoding': "UTF-8",
+    'no-outline': None,
+    'print-media-type': '',  # Muy importante para que se vean backgrounds
+    }
+
+
+    pdf = pdfkit.from_string(html, False, options=options)
+
+    response = make_response(pdf)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = 'inline; filename=reporte_habitaciones.pdf'
+
+    return response
+

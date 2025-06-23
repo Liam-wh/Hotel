@@ -3,83 +3,159 @@
 {% block title %} SISTEMA | RESERVAS {% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-4 mt-4">
-  <h3 class="fw-semibold text-dark">Lista de Reservas</h3>
-  <a href="{{ url_for('reserva.create') }}" class="btn btn-success">
-    <i class="bi bi-plus-circle me-1"></i> Nueva Reserva
-  </a>
+<div class="mb-4 mt-3">
+  <div class="row align-items-center gy-2">
+    <!-- Título -->
+    <div class="col-12 col-md-3 text-center text-md-start">
+      <h4 class="fw-bold text-dark fs-4 mb-0">Lista de Reservas</h4>
+    </div>
+
+    <!-- Formulario de búsqueda por fecha -->
+    <div class="col-12 col-md-6 d-flex justify-content-center mt-4 ">
+      <form action="{{ url_for('reserva.filtrar_por_fecha') }}" method="GET" class="d-flex w-100 me-4 ms-4" style="max-width: 400px;">
+        <input type="date" name="fecha" class="form-control form-control-sm rounded-end-0" required style="height: 36px;">
+        <button type="submit" class="btn btn-outline-primary btn-sm rounded-start-0" style="height: 36px;">
+          <i class="bi bi-search"></i>
+        </button>
+      </form>
+    </div>
+
+    <!-- Botón nueva reserva -->
+    <div class="col-12 col-md-3 d-flex justify-content-center justify-content-md-end">
+      <a href="{{ url_for('reserva.create') }}" class="btn btn-success btn-sm px-3 py-1.5 d-flex align-items-center" style="height: 36px;">
+        <i class="bi bi-plus-circle me-1"></i> Nueva Reserva
+      </a>
+    </div>
+  </div>
 </div>
+
 
 <!-- Flash messages -->
 {% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-    {% for category, message in messages %}
-    <div class="alert alert-{{ category }} alert-dismissible fade show shadow-sm rounded border-0 px-4 py-3 mt-3 animate__animated animate__fadeInDown" role="alert">
-      <div class="d-flex align-items-center">
-        <i class="bi 
+{% if messages %}
+{% for category, message in messages %}
+<div
+  class="alert alert-{{ category }} alert-dismissible fade show shadow-sm rounded border-0 px-4 py-3 mt-3 animate__animated animate__fadeInDown"
+  role="alert" style="font-size: 1rem;">
+  <div class="d-flex align-items-center">
+    <i class="bi 
           {% if category == 'success' %}bi-check-circle-fill text-success
           {% elif category == 'danger' %}bi-x-circle-fill text-danger
           {% elif category == 'warning' %}bi-exclamation-triangle-fill text-warning
           {% elif category == 'info' %}bi-info-circle-fill text-info
           {% else %}bi-bell-fill text-secondary{% endif %}
           me-2 fs-5"></i>
-        <span>{{ message }}</span>
-      </div>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-    </div>
-    {% endfor %}
-  {% endif %}
+    <span>{{ message }}</span>
+  </div>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+</div>
+{% endfor %}
+{% endif %}
 {% endwith %}
 
-<!-- Tabla responsiva -->
-<div class="table-responsive rounded shadow-sm">
-  <table class="table table-hover align-middle mb-5">
-    <thead class="table-dark">
-      <tr class="text-nowrap text-center">
-        <th scope="col">ID</th>
-        <th scope="col">Cliente</th>
-        <th scope="col">Habitación</th>
-        <th scope="col">Fecha Entrada</th>
-        <th scope="col">Fecha Salida</th>
-        <th scope="col">Total (Bs.)</th>
-        <th scope="col">Estado</th>
-        <th scope="col">Usuario</th>
-        <th scope="col">Acciones</th>
+<!-- Tabla de reservas -->
+<div class="table-responsive rounded shadow-sm mb-5">
+  <table class="table table-hover align-middle text-center mb-0" style="font-size: 0.9rem;">
+    <thead class="table-light text-dark fw-semibold text-uppercase">
+      <tr class="text-nowrap">
+        <th>N°</th>
+        <th>Cliente</th>
+        <th>Habitación</th>
+        <th>Fecha Entrada</th>
+        <th>Fecha Salida</th>
+        <th>Total (Bs)</th>
+        <th>Estado</th>
+        {% if current_user.rol in ['administrador', 'recepcionista'] %}
+        <th class="text-nowrap">Usuario</th>
+        {% endif %}
+        <th>PDF</th>
+        <th>Acciones</th>
       </tr>
     </thead>
-    <tbody class="bg-white">
+    <tbody>
       {% for reserva in reservas %}
-      <tr style="height: 70px;">
-        <td class="text-center">{{ reserva.id }}</td>
-        <td class="text-center">{{ reserva.cliente.nombre }}</td>
-        <td class="text-center">{{ reserva.habitacion.numero }} - {{ reserva.habitacion.tipo }}</td>
-        <td class="text-center">{{ reserva.fecha_entrada }}</td>
-        <td class="text-center">{{ reserva.fecha_salida }}</td>
-        <td class="text-center">{{ reserva.total }}</td>
-        <td class="text-center">
-          <span class="d-inline-block w-100 py-1 px-2 rounded text-white fw-semibold
-            {% if reserva.estado == 'RESERVADA' %}
-              bg-warning
-            {% elif reserva.estado == 'ACTIVA' %}
-              bg-success
-            {% elif reserva.estado == 'FINALIZADA' %}
-              bg-danger
-            {% endif %}
-          ">
+      <tr class="text-nowrap {% if reserva.estado == 'CANCELADA' %} bg-danger  {% endif %}" style="height: 50px;">
+
+        <td>{{ reserva.id }}</td>
+        <td>{{ reserva.cliente.nombre }}</td>
+        <td>{{ reserva.habitacion.numero }} - {{ reserva.habitacion.tipo }}</td>
+        <td>{{ reserva.fecha_entrada }}</td>
+        <td>{{ reserva.fecha_salida }}</td>
+        <td>{{ reserva.total }}</td>
+        <td>
+          <span class="d-inline-block w-100 py-1 px-1 rounded text-white fw-semibold  
+            {% if reserva.estado == 'RESERVADA' %}bg-primary
+            {% elif reserva.estado == 'ACTIVA' %}bg-success
+            {% elif reserva.estado == 'CANCELADA' %}bg-secondary
+            {% elif reserva.estado == 'FINALIZADA' %}bg-danger{% endif %}">
             {{ reserva.estado }}
           </span>
         </td>
-        <td class="text-center">{{ reserva.usuario.nombre }}</td>
-        <td class="text-center">
-          {% if current_user.rol == 'administrador' or current_user.rol == 'recepcionista' %}
-          <a href="{{ url_for('reserva.delete', id=reserva.id) }}" class="btn btn-sm btn-outline-danger">
-            Eliminar
+        {% if current_user.rol in ['administrador', 'recepcionista'] %}
+        <td>{{ reserva.usuario.nombre }}</td>
+        {% endif %}
+        <!-- Botón PDF -->
+        <td>
+          <a href="{{ url_for('reserva.generar_pdf', id=reserva.id) }}" class="btn btn-sm btn-outline-danger"
+            target="_blank">
+            <i class="bi bi-file-earmark-pdf"></i>
           </a>
+        </td>
+
+        <td>
+          {% if reserva.estado not in ['FINALIZADA', 'CANCELADA'] %}
+          <a href="{{ url_for('reserva.cancelar', id=reserva.id) }}" class="btn btn-sm btn-outline-danger"
+            onclick="return confirm('¿Deseas cancelar esta reserva?');">
+            Cancelar
+          </a>
+          {% else %}
+          <span class="text-muted">No disponible</span>
           {% endif %}
         </td>
+
       </tr>
       {% endfor %}
     </tbody>
   </table>
 </div>
+
+{% if usuario and usuario.rol == 'administrador' %}
+<div class="container mt-3 mb-4">
+  <form action="{{ url_for('reserva.reporte_pdf_rango') }}" method="POST" target="_blank"
+        class="bg-light rounded p-3 shadow-sm d-flex flex-column flex-md-row align-items-center justify-content-center gap-3">
+
+    <!-- Mes inicio -->
+    <div class="d-flex align-items-center">
+      <label for="mes_inicio" class="mb-0 me-2">Desde</label>
+      <input type="month" id="mes_inicio" name="mes_inicio" class="form-control form-control-sm" required>
+    </div>
+
+    <!-- Mes fin -->
+    <div class="d-flex align-items-center">
+      <label for="mes_fin" class="mb-0 me-2">Hasta</label>
+      <input type="month" id="mes_fin" name="mes_fin" class="form-control form-control-sm" required>
+    </div>
+
+    <!-- Botón PDF -->
+    <div>
+      <button type="submit" class="btn btn-danger btn-sm">
+        <i class="bi bi-file-earmark-pdf me-1"></i> Generar PDF
+      </button>
+    </div>
+
+  </form>
+</div>
+{% endif %}
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(function () {
+      document.querySelectorAll(".alert").forEach(function (alertEl) {
+        alertEl.classList.remove("show");
+        setTimeout(() => alertEl.remove(), 300);
+      });
+    }, 2000);
+  });
+</script>
 {% endblock %}
