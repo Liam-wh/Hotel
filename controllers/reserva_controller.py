@@ -1,4 +1,4 @@
-from flask import request, redirect, url_for, Blueprint, flash, jsonify, make_response, render_template
+from flask import request, redirect, url_for, Blueprint, flash, jsonify, make_response, render_template, current_app
 from models.reserva_model import Reserva
 from models.cliente_model import Cliente
 from models.habitacion_model import Habitacion
@@ -9,6 +9,7 @@ from collections import defaultdict
 import pdfkit  # Para convertir HTML a PDF
 from sqlalchemy import extract
 from datetime import date, datetime, timedelta
+import os
 
 reserva_bp = Blueprint('reserva', __name__, url_prefix='/reservas')
 
@@ -187,31 +188,37 @@ def generar_pdf(id):
     impuesto = subtotal * 0.13
     total_final = subtotal + impuesto
 
-    modelo_url = request.host_url.rstrip('/') + url_for('static', filename='images/modelo_mini.jpg')
+    # ✅ Ruta local para wkhtmltopdf
+    modelo_path = os.path.join(current_app.root_path, 'static', 'images', 'modelo_mini.jpg')
+    modelo_url = 'file://' + modelo_path
 
     html = render_template(
         'pdf/reserva_pdf.html',
         reserva=reserva,
         servicios=servicios_reservados,
         total_servicios=total_servicios,
-        subtotal=subtotal,              # <-- PASADO A LA PLANTILLA
-        impuesto=impuesto,              # <-- PASADO A LA PLANTILLA
-        total_final=total_final        # <-- PASADO A LA PLANTILLA
+        subtotal=subtotal,
+        impuesto=impuesto,
+        total_final=total_final,
+        modelo_url=modelo_url
     )
 
-    pdf = pdfkit.from_string(html, False, options={
-    'page-size': 'Letter',
-    'margin-top': '0mm',
-    'margin-bottom': '0mm',
-    'margin-left': '0mm',
-    'margin-right': '0mm',
-    'encoding': "UTF-8",
-    })
+    options = {
+        'page-size': 'Letter',
+        'margin-top': '0mm',
+        'margin-bottom': '0mm',
+        'margin-left': '0mm',
+        'margin-right': '0mm',
+        'encoding': "UTF-8",
+        'enable-local-file-access': '',  # ✅ obligatorio para usar imágenes locales
+        'print-media-type': '',          # ✅ útil si usas estilos @media print
+    }
+
+    pdf = pdfkit.from_string(html, False, options=options)
 
     response = make_response(pdf)
     response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] = f'attachment; filename=Reserva_{reserva.id}_{reserva.cliente.nombre}.pdf'
-    #Se visualiza en el navegador: usa inline     -   Se descarga automáticamente: usa attachment
+    response.headers['Content-Disposition'] = f'inline; filename=Reserva_{reserva.id}_{reserva.cliente.nombre}.pdf'
 
     return response
 
@@ -235,6 +242,8 @@ def filtrar_por_fecha():
     clientes = Cliente.get_all()
     habitaciones = Habitacion.get_all()
     return reserva_view.list(reservas, clientes, habitaciones)
+
+
 
 
 @reserva_bp.route('/reporte/pdf/rango', methods=['GET', 'POST'])
@@ -264,7 +273,9 @@ def reporte_pdf_rango():
             Reserva.fecha_salida >= fecha_inicio
         ).all()
 
-        modelo_url = request.host_url.rstrip('/') + url_for('static', filename='images/modelo_mini.jpg')
+        # ✅ Usar ruta local absoluta para la imagen
+        modelo_path = os.path.join(current_app.root_path, 'static', 'images', 'modelo_mini.jpg')
+        modelo_url = 'file://' + modelo_path
 
         html = render_template(
             'pdf/reservas_rango_pdf.html',
@@ -282,11 +293,14 @@ def reporte_pdf_rango():
             'margin-left': '0mm',
             'margin-right': '0mm',
             'encoding': "UTF-8",
+            'print-media-type': '',  # útil para imprimir estilos de fondo
         })
 
         response = make_response(pdf)
         response.headers['Content-Type'] = 'application/pdf'
-        response.headers['Content-Disposition'] = f'inline; filename=Reporte_Reservas_{mes_inicio}_a_{mes_fin}.pdf'
+        response.headers['Content-Disposition'] = (
+            f'inline; filename=Reporte_Reservas_{mes_inicio}_a_{mes_fin}.pdf'
+        )
 
         return response
 

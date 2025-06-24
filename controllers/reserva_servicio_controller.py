@@ -40,6 +40,8 @@ def create():
 
     return reserva_servicio_view.create()
 
+
+
 @reserva_servicio_bp.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit(id):
     registro = ReservaServicio.get_by_id(id)

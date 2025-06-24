@@ -1,8 +1,9 @@
-from flask import request, redirect, url_for, Blueprint, flash, session, render_template, make_response
+from flask import request, redirect, url_for, Blueprint, flash, session, render_template, make_response, current_app
 from flask_login import login_user, logout_user, login_required, current_user
 from models.cliente_model import Cliente
 from views import cliente_view
 import pdfkit
+import os
 
 cliente_bp = Blueprint('cliente', __name__, url_prefix='/clientes')
 
@@ -159,11 +160,16 @@ def buscar_documento():
 
 
 
+
 @cliente_bp.route('/reporte/pdf')
 @login_required
 def reporte_pdf():
+    
     clientes = Cliente.get_all()
-    modelo_url = request.host_url.rstrip('/') + url_for('static', filename='images/modelo_pdf.jpg')
+
+    # Ruta absoluta local al archivo en disco (para wkhtmltopdf)
+    modelo_path = os.path.join(current_app.root_path, 'static', 'images', 'modelo_pdf.jpg')
+    modelo_url = 'file://' + modelo_path  # Para usar en HTML
 
     html = render_template('pdf/clientes_pdf.html', clientes=clientes, modelo_url=modelo_url)
 
@@ -175,7 +181,6 @@ def reporte_pdf():
         'margin-bottom': '0mm',
         'margin-left': '0mm',
         'margin-right': '0mm',
-        'no-images': '',
         'no-outline': None
     }
 
@@ -186,5 +191,3 @@ def reporte_pdf():
     response.headers['Content-Disposition'] = 'inline; filename=reporte_clientes.pdf'
 
     return response
-
-

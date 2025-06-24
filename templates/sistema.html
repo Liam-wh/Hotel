@@ -121,20 +121,20 @@
             </div>
             <div class="offcanvas-body">
                 {% if usuario and usuario.rol == 'administrador' %}
-                <a class="nav-link text-white ms-2" href="/clientes/">ㅤClientes</a>
-                <a class="nav-link text-white ms-2" href="/habitaciones/">ㅤHabitaciones</a>
-                <a class="nav-link text-white ms-2" href="/servicios/">ㅤServicios</a>
-                <a class="nav-link text-white ms-2" href="/reservas/">ㅤReservas</a>
-                <a class="nav-link text-white ms-2" href="/reserva_servicios/">ㅤReserva de Servicio</a>
-                <a class="nav-link text-white ms-2" href="/usuarios/">ㅤUsuarios</a>
+                <a class="nav-link text-white ms-2" href="/clientes/">Clientes</a>
+                <a class="nav-link text-white ms-2" href="/habitaciones/">Habitaciones</a>
+                <a class="nav-link text-white ms-2" href="/servicios/">Servicios</a>
+                <a class="nav-link text-white ms-2" href="/reservas/">Reservas</a>
+                <a class="nav-link text-white ms-2" href="/reserva_servicios/">Reserva de Servicio</a>
+                <a class="nav-link text-white ms-2" href="/usuarios/">Usuarios</a>
 
                 {% elif usuario and usuario.rol == 'recepcionista' %}
-                <a class="nav-link text-white ms-2" href="/clientes/">ㅤClientes</a>
-                <a class="nav-link text-white ms-2" href="/reservas/">ㅤReservas</a>
-                <a class="nav-link text-white ms-2" href="/reserva_servicios/">ㅤReserva de Servicio</a>
+                <a class="nav-link text-white ms-2" href="/clientes/">Clientes</a>
+                <a class="nav-link text-white ms-2" href="/reservas/">Reservas</a>
+                <a class="nav-link text-white ms-2" href="/reserva_servicios/">Reserva de Servicio</a>
 
                 {% elif cliente %}
-                <a class="nav-link text-white ms-2" href="/reservas/">ㅤReservas</a>
+                <a class="nav-link text-white ms-2" href="/reservas/">Reservas</a>
                 {% endif %}
             </div>
 

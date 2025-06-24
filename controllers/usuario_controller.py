@@ -1,10 +1,11 @@
-from flask import request, redirect, url_for, Blueprint, flash, session, render_template, make_response
+from flask import request, redirect, url_for, Blueprint, flash, session, render_template, make_response, current_app
 from models.usuario_model import Usuario
 from views import usuario_view
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import check_password_hash
 from database import db 
 import pdfkit
+import os
 
 usuario_bp = Blueprint('usuario', __name__, url_prefix='/usuarios')
 
@@ -177,12 +178,15 @@ def actualizar_perfil():
 
 
 
+
 @usuario_bp.route('/reporte/pdf')
 @login_required
 def reporte_pdf():
     usuarios = Usuario.get_all()
 
-    modelo_url = request.host_url.rstrip('/') + url_for('static', filename='images/modelo_pdf.jpg')
+    # ✅ Ruta absoluta local a la imagen (no usar URL externa)
+    modelo_path = os.path.join(current_app.root_path, 'static', 'images', 'modelo_pdf.jpg')
+    modelo_url = 'file://' + modelo_path
 
     html = render_template('pdf/usuarios_pdf.html', usuarios=usuarios, modelo_url=modelo_url)
 
@@ -194,15 +198,14 @@ def reporte_pdf():
         'margin-left': '0mm',
         'margin-right': '0mm',
         'encoding': "UTF-8",
-        'no-images': '',
-        'no-outline': None,
+        'print-media-type': '',  # Para mostrar fondos definidos en CSS
+        'no-outline': None
     }
 
     pdf = pdfkit.from_string(html, False, options=options)
 
     response = make_response(pdf)
     response.headers['Content-Type'] = 'application/pdf'
-    # Mostrar inline en navegador (previa)
     response.headers['Content-Disposition'] = 'inline; filename=reporte_usuarios.pdf'
 
     return response

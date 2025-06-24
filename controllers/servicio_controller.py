@@ -1,8 +1,9 @@
-from flask import request, redirect, url_for, Blueprint, flash, render_template, make_response
+from flask import request, redirect, url_for, Blueprint, flash, render_template, make_response, current_app
 from models.servicio_model import Servicio
 from views import servicio_view
 from flask_login import login_required
 import pdfkit
+import os
 
 servicio_bp = Blueprint('servicio', __name__, url_prefix='/servicios')
 
@@ -73,11 +74,16 @@ def delete(id):
 
 
 
+
+
 @servicio_bp.route('/reporte/pdf')
 @login_required
 def reporte_pdf():
     servicios = Servicio.get_all()
-    modelo_url = request.host_url.rstrip('/') + url_for('static', filename='images/modelo_pdf.jpg')
+
+    # ✅ Usar ruta absoluta local a la imagen para que wkhtmltopdf la pueda leer
+    modelo_path = os.path.join(current_app.root_path, 'static', 'images', 'modelo_pdf.jpg')
+    modelo_url = 'file://' + modelo_path
 
     html = render_template('pdf/servicios_pdf.html', servicios=servicios, modelo_url=modelo_url)
 
@@ -90,14 +96,13 @@ def reporte_pdf():
         'margin-right': '0mm',
         'encoding': "UTF-8",
         'no-outline': None,
+        'print-media-type': '',  # Permite que se rendericen estilos de fondo
     }
 
     pdf = pdfkit.from_string(html, False, options=options)
 
     response = make_response(pdf)
     response.headers['Content-Type'] = 'application/pdf'
-    # Mostrar inline en navegador (previa)
     response.headers['Content-Disposition'] = 'inline; filename=reporte_servicios.pdf'
 
     return response
-
